@@ -1,11 +1,12 @@
-import React from 'react';
-import { ShieldCheck, Database, Brain, ArrowLeft, MapPin, Building2, GraduationCap, Network, CheckCircle2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { ShieldCheck, Database, Brain, ArrowLeft, MapPin, Building2, GraduationCap, Network, CheckCircle2, LayoutGrid, List } from 'lucide-react';
 
 interface ScientificCommitteeProps {
   onBack: () => void;
 }
 
 const ScientificCommittee: React.FC<ScientificCommitteeProps> = ({ onBack }) => {
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   
   const members = [
     {
@@ -133,52 +134,113 @@ const ScientificCommittee: React.FC<ScientificCommitteeProps> = ({ onBack }) => 
       {/* Team Grid */}
       <div className="relative py-24 bg-gradient-to-b from-[#020617] to-slate-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-end justify-between mb-16 border-b border-slate-800 pb-8">
+            <div className="flex flex-col md:flex-row items-end justify-between mb-16 border-b border-slate-800 pb-8 gap-4">
                 <div>
                     <h2 className="text-3xl font-bold text-white font-heading">Comitê Científico</h2>
                     <p className="text-slate-500 mt-2">Conheça as mentes que validam nossa tecnologia.</p>
                 </div>
-                <div className="hidden md:flex items-center gap-2 text-emerald-500 text-sm font-medium bg-emerald-500/5 px-3 py-1 rounded-full border border-emerald-500/10">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    Membros Ativos
+                
+                <div className="flex items-center gap-6">
+                  {/* View Toggle */}
+                  <div className="bg-slate-900 border border-slate-800 rounded-lg p-1 flex gap-1">
+                    <button 
+                      onClick={() => setViewMode('grid')}
+                      className={`p-2 rounded-md transition-all ${viewMode === 'grid' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
+                      title="Visualização em Grade"
+                    >
+                      <LayoutGrid className="w-4 h-4" />
+                    </button>
+                    <button 
+                      onClick={() => setViewMode('list')}
+                      className={`p-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
+                      title="Visualização em Lista"
+                    >
+                      <List className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  <div className="hidden md:flex items-center gap-2 text-emerald-500 text-sm font-medium bg-emerald-500/5 px-3 py-1 rounded-full border border-emerald-500/10">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                      Membros Ativos
+                  </div>
                 </div>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className={viewMode === 'grid' ? "grid md:grid-cols-2 lg:grid-cols-3 gap-8" : "flex flex-col gap-4 max-w-5xl mx-auto"}>
                 {members.map((member, index) => (
-                    <div key={index} className="group relative bg-[#0f172a] border border-white/5 rounded-[32px] p-1 overflow-hidden hover:border-cyan-500/30 transition-all duration-500 hover:shadow-[0_0_40px_-10px_rgba(6,182,212,0.15)]">
-                        {/* Spotlight Effect */}
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px] -mr-32 -mt-32 group-hover:bg-cyan-500/20 transition-all duration-700"></div>
-                        
-                        <div className="bg-[#020617]/80 rounded-[28px] p-7 h-full relative z-10 backdrop-blur-xl">
-                            <div className="flex items-start justify-between mb-8">
-                                <div className="relative">
-                                    <div className="w-20 h-20 rounded-2xl overflow-hidden ring-4 ring-[#1e293b] group-hover:ring-cyan-500/30 transition-all duration-500">
-                                        <img src={member.image} alt={member.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
-                                    </div>
-                                    <div className="absolute -bottom-3 -right-3 bg-slate-900 text-[10px] font-bold text-cyan-400 px-3 py-1.5 rounded-lg border border-slate-800 shadow-xl tracking-wide uppercase font-heading">
-                                        {member.expert}
-                                    </div>
-                                </div>
-                                <div className="flex flex-col items-end">
-                                    <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-800/50 px-3 py-1.5 rounded-lg border border-white/5">
-                                        <MapPin className="w-3 h-3 text-cyan-600" /> {member.region}
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div className="space-y-1.5 mb-6">
-                                <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors font-heading">{member.name}</h3>
-                                <p className="text-sm font-semibold text-indigo-400">{member.title}</p>
-                                <p className="text-xs text-slate-500 uppercase tracking-wider font-bold mt-2 border-l-2 border-slate-800 pl-3 group-hover:border-cyan-500/30 transition-all">{member.role}</p>
-                            </div>
+                    viewMode === 'grid' ? (
+                      // GRID VIEW CARD
+                      <div key={index} className="group relative bg-[#0f172a] border border-white/5 rounded-[32px] p-1 overflow-hidden hover:border-cyan-500/30 transition-all duration-500 hover:shadow-[0_0_40px_-10px_rgba(6,182,212,0.15)] animate-fade-in-up">
+                          {/* Spotlight Effect */}
+                          <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px] -mr-32 -mt-32 group-hover:bg-cyan-500/20 transition-all duration-700"></div>
+                          
+                          <div className="bg-[#020617]/80 rounded-[28px] p-7 h-full relative z-10 backdrop-blur-xl">
+                              <div className="flex items-start justify-between mb-8">
+                                  <div className="relative">
+                                      <div className="w-20 h-20 rounded-2xl overflow-hidden ring-4 ring-[#1e293b] group-hover:ring-cyan-500/30 transition-all duration-500">
+                                          <img src={member.image} alt={member.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                                      </div>
+                                      <div className="absolute -bottom-3 -right-3 bg-slate-900 text-[10px] font-bold text-cyan-400 px-3 py-1.5 rounded-lg border border-slate-800 shadow-xl tracking-wide uppercase font-heading">
+                                          {member.expert}
+                                      </div>
+                                  </div>
+                                  <div className="flex flex-col items-end">
+                                      <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-800/50 px-3 py-1.5 rounded-lg border border-white/5">
+                                          <MapPin className="w-3 h-3 text-cyan-600" /> {member.region}
+                                      </span>
+                                  </div>
+                              </div>
+                              
+                              <div className="space-y-1.5 mb-6">
+                                  <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors font-heading">{member.name}</h3>
+                                  <p className="text-sm font-semibold text-indigo-400">{member.title}</p>
+                                  <p className="text-xs text-slate-500 uppercase tracking-wider font-bold mt-2 border-l-2 border-slate-800 pl-3 group-hover:border-cyan-500/30 transition-all">{member.role}</p>
+                              </div>
 
-                            <div className="pt-5 mt-4 border-t border-slate-800/50 flex items-center gap-2.5 text-slate-500 text-xs font-medium">
-                                <Building2 className="w-3.5 h-3.5 text-slate-600" />
-                                <span className="truncate">{member.institution}</span>
-                            </div>
-                        </div>
-                    </div>
+                              <div className="pt-5 mt-4 border-t border-slate-800/50 flex items-center gap-2.5 text-slate-500 text-xs font-medium">
+                                  <Building2 className="w-3.5 h-3.5 text-slate-600" />
+                                  <span className="truncate">{member.institution}</span>
+                              </div>
+                          </div>
+                      </div>
+                    ) : (
+                      // LIST VIEW CARD
+                      <div key={index} className="group relative bg-[#0f172a] border border-white/5 rounded-[24px] p-1 overflow-hidden hover:border-cyan-500/30 transition-all duration-500 hover:shadow-[0_0_40px_-10px_rgba(6,182,212,0.15)] animate-fade-in-up">
+                          <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px] -mr-32 -mt-32 group-hover:bg-cyan-500/20 transition-all duration-700"></div>
+                          
+                          <div className="bg-[#020617]/80 rounded-[20px] p-6 h-full relative z-10 backdrop-blur-xl flex flex-col md:flex-row items-center gap-6">
+                              <div className="relative flex-shrink-0">
+                                   <div className="w-16 h-16 rounded-2xl overflow-hidden ring-4 ring-[#1e293b] group-hover:ring-cyan-500/30 transition-all duration-500">
+                                        <img src={member.image} alt={member.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                                   </div>
+                              </div>
+
+                              <div className="flex-1 text-center md:text-left">
+                                  <div className="flex flex-col md:flex-row md:items-center gap-2 mb-1">
+                                    <h3 className="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors font-heading">{member.name}</h3>
+                                    <span className="hidden md:block w-1 h-1 bg-slate-600 rounded-full"></span>
+                                    <p className="text-sm font-semibold text-indigo-400">{member.title}</p>
+                                  </div>
+                                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                                     <p className="text-xs text-slate-500 uppercase tracking-wider font-bold">{member.role}</p>
+                                     <span className="hidden md:inline-flex px-2 py-0.5 rounded border border-cyan-500/20 bg-cyan-950/30 text-[10px] text-cyan-400 font-bold uppercase tracking-wide">
+                                        {member.expert}
+                                     </span>
+                                  </div>
+                              </div>
+
+                              <div className="flex flex-col items-center md:items-end gap-2 border-t md:border-t-0 md:border-l border-slate-800/50 pt-4 md:pt-0 md:pl-6 w-full md:w-auto min-w-[200px]">
+                                   <div className="flex items-center gap-2 text-slate-400 text-xs font-medium">
+                                      <Building2 className="w-3.5 h-3.5 text-slate-600" />
+                                      <span className="truncate max-w-[200px]">{member.institution.split('(')[0]}</span>
+                                   </div>
+                                   <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                                      <MapPin className="w-3 h-3 text-cyan-600/70" /> {member.region}
+                                   </span>
+                              </div>
+                          </div>
+                      </div>
+                    )
                 ))}
             </div>
 
