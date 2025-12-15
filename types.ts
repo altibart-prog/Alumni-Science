@@ -17,6 +17,7 @@ export type ViewState =
   | 'extract' 
   | 'members' 
   | 'citations' 
+  | 'academic-intelligence'
   | 'tools';
 
 export type MembershipTier = 'FREE' | 'PRO' | 'INSTITUTIONAL';

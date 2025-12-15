@@ -7,6 +7,7 @@ import LandingPage from './components/LandingPage';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import ReviewPage from './components/ReviewPage';
+import AcademicIntelligence from './components/AcademicIntelligence';
 import PlaceholderView from './components/PlaceholderView';
 import { User, ViewState, MenuItem } from './types';
 
@@ -36,7 +37,7 @@ export default function App() {
   const getMenuDetails = (view: ViewState) => {
     const items: MenuItem[] = [
       { id: 'dashboard', label: 'Início', icon: Home, subtitle: 'Visão geral', view: 'dashboard' },
-      { id: 'intelligence', label: 'Inteligência Acadêmica', icon: BookOpen, subtitle: 'CAPES, Qualis & Impacto', view: 'members' },
+      { id: 'intelligence', label: 'Inteligência Acadêmica', icon: BookOpen, subtitle: 'CAPES, Qualis & Impacto', view: 'academic-intelligence' },
       { id: 'agents', label: 'Galeria de Agentes', icon: Bot, subtitle: 'Assistentes especializados', view: 'agents' },
       { id: 'draft', label: 'Esboço Inteligente', icon: FileEdit, subtitle: 'Artigo via Zotero/Mendeley', view: 'draft' },
       { id: 'chat', label: 'Chat com PDF', icon: MessageSquare, subtitle: 'Interaja com documentos', view: 'chat' },
@@ -78,7 +79,11 @@ export default function App() {
             <ReviewPage />
           )}
 
-          {currentView !== 'dashboard' && currentView !== 'review' && currentMenu && (
+          {currentView === 'academic-intelligence' && (
+            <AcademicIntelligence />
+          )}
+
+          {currentView !== 'dashboard' && currentView !== 'review' && currentView !== 'academic-intelligence' && currentMenu && (
             <PlaceholderView 
               view={currentView}
               icon={currentMenu.icon}
