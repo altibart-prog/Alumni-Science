@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, LucideIcon } from 'lucide-react';
+import { Sparkles, LucideIcon, Construction } from 'lucide-react';
 import { ViewState } from '../types';
 
 interface PlaceholderViewProps {
@@ -17,31 +17,37 @@ const PlaceholderView: React.FC<PlaceholderViewProps> = ({
   onBack 
 }) => {
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-gray-200 p-16 text-center shadow-sm animate-fade-in">
-      <div className="w-24 h-24 bg-cyan-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-cyan-100">
-        {Icon && <Icon className="w-12 h-12 text-cyan-600" />}
-      </div>
-      
-      <h2 className="text-3xl font-bold text-gray-900 mb-3">{label}</h2>
-      <p className="text-gray-500 text-lg mb-10 max-w-md mx-auto">{subtitle}</p>
-      
-      <div className="bg-gradient-to-r from-cyan-50 to-blue-50 border border-cyan-100 rounded-xl p-6 mb-10 max-w-lg mx-auto">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <Sparkles className="w-5 h-5 text-cyan-600" />
-          <p className="text-base text-cyan-900 font-bold">Em Desenvolvimento</p>
+    <div className="max-w-3xl mx-auto mt-10 p-1 relative animate-fade-in">
+      {/* Decorative Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div className="relative bg-[#0f172a]/60 backdrop-blur-xl rounded-[2.5rem] border border-white/5 p-16 text-center shadow-2xl">
+        <div className="w-24 h-24 bg-[#020617] rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/10 shadow-xl shadow-cyan-900/20">
+          {Icon ? <Icon className="w-10 h-10 text-cyan-400" /> : <Construction className="w-10 h-10 text-slate-500" />}
         </div>
-        <p className="text-sm text-cyan-700">
-          Nossa equipe de engenharia está finalizando os últimos detalhes desta ferramenta. 
-          Ela estará disponível na próxima atualização.
-        </p>
+        
+        <h2 className="text-4xl font-extrabold text-white mb-4 font-heading">{label}</h2>
+        <p className="text-slate-400 text-lg mb-12 max-w-lg mx-auto leading-relaxed">{subtitle}</p>
+        
+        <div className="inline-flex items-center gap-4 bg-gradient-to-r from-cyan-900/20 to-blue-900/20 border border-cyan-500/20 rounded-2xl p-6 mb-12 max-w-lg mx-auto">
+          <div className="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
+             <Sparkles className="w-5 h-5 text-cyan-400 animate-pulse" />
+          </div>
+          <div className="text-left">
+            <p className="text-sm text-cyan-200 font-bold mb-1">Em Desenvolvimento</p>
+            <p className="text-xs text-slate-400 leading-relaxed">
+                Nossa equipe de engenharia está finalizando os últimos detalhes desta ferramenta neural. Disponível na próxima atualização (v2.5).
+            </p>
+          </div>
+        </div>
+        
+        <button 
+          onClick={onBack}
+          className="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl transition-all hover:scale-105 font-bold text-sm tracking-wide"
+        >
+          Voltar ao Dashboard
+        </button>
       </div>
-      
-      <button 
-        onClick={onBack}
-        className="bg-white text-gray-700 border border-gray-300 px-8 py-3 rounded-xl hover:bg-gray-50 hover:text-gray-900 transition font-medium"
-      >
-        Voltar ao Dashboard
-      </button>
     </div>
   );
 };
