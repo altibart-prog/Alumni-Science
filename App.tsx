@@ -65,7 +65,7 @@ export default function App() {
   const currentMenu = getMenuDetails(currentView);
 
   return (
-    <div className="min-h-screen bg-slate-50 flex font-sans">
+    <div className="min-h-screen bg-[#020617] flex font-sans text-slate-50">
       <Sidebar 
         sidebarOpen={sidebarOpen} 
         setSidebarOpen={setSidebarOpen} 
