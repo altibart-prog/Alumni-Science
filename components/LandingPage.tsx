@@ -1,37 +1,123 @@
 import React from 'react';
-import { BookOpen, Zap, Award, ChevronRight, Users } from 'lucide-react';
+import { BookOpen, Award, ChevronRight, Users, GraduationCap, Scale, Building2, Globe, Zap, Network } from 'lucide-react';
+import { ViewState } from '../types';
 
 interface LandingPageProps {
   onLogin: (provider: string) => void;
+  onNavigate: (view: ViewState) => void;
 }
 
-const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
+const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onNavigate }) => {
+  
+  // Lista de Parceiros com URLs oficiais (simuladas via CDNs públicos para demonstração)
+  // Em produção, substitua os links pelos arquivos locais na pasta /public/assets/
+  const partners = [
+    { 
+      name: "PROFUTURO FIA", 
+      logo: "https://upload.wikimedia.org/wikipedia/pt/1/1e/Logo_FIA.png",
+      width: "w-32"
+    },
+    { 
+      name: "ALUMNI IN", 
+      component: (
+        <div className="flex items-center gap-2 group">
+          <div className="relative w-8 h-8 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-lg flex items-center justify-center">
+            <BookOpen className="w-4 h-4 text-cyan-600" />
+          </div>
+          <span className="text-lg font-bold tracking-tight text-slate-800">
+            Alumni<span className="text-cyan-600">.in</span>
+          </span>
+        </div>
+      )
+    },
+    { 
+      name: "UNASP", 
+      logo: "https://upload.wikimedia.org/wikipedia/commons/6/63/Logo_UNASP.png",
+      width: "w-32"
+    },
+    { 
+      name: "UNICURITIBA", 
+      logo: "https://upload.wikimedia.org/wikipedia/pt/4/4f/Logo_Unicuritiba.png",
+      width: "w-36"
+    },
+    { 
+      name: "CEBRAEV", 
+      // Placeholder estilizado para CEBRAEV (substituir por arquivo real)
+      component: (
+         <div className="flex flex-col items-center">
+            <span className="text-xl font-black tracking-widest text-yellow-500 bg-black px-2 py-1 rounded">CEBRAEV</span>
+            <span className="text-[8px] font-medium text-slate-600 mt-1 uppercase">Centro Brasileiro de Varejo</span>
+         </div>
+      )
+    },
+    { 
+      name: "TRT 9ª REGIÃO", 
+      logo: "https://upload.wikimedia.org/wikipedia/commons/e/e4/TRT_9_Bras%C3%A3o.png",
+      width: "w-16"
+    },
+    { 
+      name: "PODER JUDICIÁRIO SC", 
+      logo: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Bras%C3%A3o_do_TJ-SC.png",
+      width: "w-16"
+    },
+    { 
+      name: "PROMPTAI ACADEMY", 
+       // Placeholder estilizado para PromptAI (substituir por arquivo real)
+       component: (
+        <div className="flex items-center gap-1">
+           <Zap className="w-6 h-6 text-indigo-600 fill-indigo-600" />
+           <div className="flex flex-col leading-none">
+             <span className="font-bold text-slate-900 text-sm">PROMPT<span className="text-indigo-600">AI</span></span>
+             <span className="text-[8px] tracking-widest text-slate-500 uppercase">Academy</span>
+           </div>
+        </div>
+     )
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 font-sans">
+    <div className="min-h-screen bg-slate-900 font-sans selection:bg-cyan-500/30 text-slate-50">
+      
+      {/* Background Effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl translate-y-1/2"></div>
+      </div>
+
       {/* Header */}
-      <nav className="bg-slate-900/50 backdrop-blur-sm border-b border-cyan-500/20 sticky top-0 z-50">
+      <nav className="fixed w-full bg-slate-900/80 backdrop-blur-md border-b border-white/5 z-50 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-cyan-500/20">
-                <BookOpen className="w-6 h-6 text-white" />
+          <div className="flex justify-between items-center h-20">
+            <div className="flex items-center gap-3 group cursor-pointer" onClick={() => onNavigate('landing')}>
+              <div className="relative">
+                <div className="absolute inset-0 bg-cyan-500 blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                <div className="relative w-10 h-10 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl flex items-center justify-center shadow-2xl">
+                  <BookOpen className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition duration-300" />
+                </div>
               </div>
-              <span className="text-2xl font-bold tracking-tight">
-                <span className="text-white">Alumni</span>
-                <span className="text-cyan-400"> Science</span>
+              <span className="text-xl font-bold tracking-tight text-white">
+                Alumni<span className="text-cyan-400">.in</span>
               </span>
             </div>
             
-            <div className="hidden md:flex items-center gap-6">
-              <button className="text-gray-300 hover:text-white transition font-medium text-sm">Ferramentas IA</button>
-              <button className="text-gray-300 hover:text-white transition font-medium text-sm">Estratégia CAPES</button>
-              <button className="text-gray-300 hover:text-white transition font-medium text-sm">Planos Institucionais</button>
+            <div className="hidden md:flex items-center gap-8">
+              <a href="#" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Soluções</a>
+              
+              {/* Novo Item de Menu Inovador */}
+              <button 
+                onClick={() => onNavigate('committee')}
+                className="group flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors"
+              >
+                <Network className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors" />
+                Comitê Científico
+              </button>
+
+              <a href="#" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Preços</a>
               <button 
                 onClick={() => onLogin('google')}
-                className="bg-cyan-500 text-white px-6 py-2 rounded-lg hover:bg-cyan-600 transition flex items-center gap-2 font-semibold shadow-lg shadow-cyan-500/20"
+                className="bg-white text-slate-900 px-5 py-2.5 rounded-lg hover:bg-cyan-50 transition-all font-semibold text-sm shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(34,211,238,0.4)]"
               >
-                <Users className="w-4 h-4" />
-                LOGIN
+                Acessar Plataforma
               </button>
             </div>
           </div>
@@ -39,104 +125,136 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
       </nav>
 
       {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full px-4 py-2 mb-6 backdrop-blur-sm">
-              <Zap className="w-4 h-4 text-cyan-400" />
-              <span className="text-cyan-400 text-sm font-semibold tracking-wide">PLATAFORMA DE INTELIGÊNCIA ACADÊMICA</span>
-            </div>
+      <div className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             
-            <h1 className="text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight tracking-tight">
-              Transforme Ideias em{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-                Legado Científico.
-              </span>
-            </h1>
-            
-            <p className="text-gray-400 text-lg mb-8 leading-relaxed max-w-xl">
-              Sua pesquisa tem potencial para mudar o mundo. Nós fornecemos a inteligência estratégica 
-              para garantir que ela seja lida, citada e reconhecida globalmente.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button 
-                onClick={() => onLogin('google')}
-                className="flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-xl hover:shadow-xl hover:shadow-cyan-500/30 transition transform hover:-translate-y-1 font-semibold"
-              >
-                <BookOpen className="w-5 h-5" />
-                Começar Agora
-                <ChevronRight className="w-4 h-4" />
-              </button>
-              <button className="flex items-center justify-center gap-2 bg-slate-800 border border-cyan-500/30 text-white px-8 py-4 rounded-xl hover:bg-slate-700 transition transform hover:-translate-y-1 font-semibold">
-                <Award className="w-5 h-5 text-yellow-400" />
-                Revistas Alto Impacto
-              </button>
-            </div>
-          </div>
-
-          {/* Login Card */}
-          <div className="bg-slate-800/50 backdrop-blur-xl border border-cyan-500/20 rounded-2xl p-8 shadow-2xl shadow-black/50">
-            <h2 className="text-2xl font-bold text-white mb-2 text-center">Acesse o Alumni Science</h2>
-            <p className="text-gray-400 text-center mb-8">Sua conta unificada de pesquisa</p>
-            
-            <div className="space-y-4">
-              <button
-                onClick={() => onLogin('google')}
-                className="w-full flex items-center justify-center gap-3 bg-white text-gray-900 py-3.5 rounded-xl hover:bg-gray-50 transition font-semibold shadow-sm"
-              >
-                <svg className="w-5 h-5" viewBox="0 0 24 24">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                </svg>
-                Continuar com Google
-              </button>
-
-              <button
-                onClick={() => onLogin('microsoft')}
-                className="w-full flex items-center justify-center gap-3 bg-slate-700 text-white py-3.5 rounded-xl hover:bg-slate-600 transition font-semibold shadow-sm ring-1 ring-white/10"
-              >
-                <svg className="w-5 h-5" viewBox="0 0 23 23">
-                  <path fill="#f3f3f3" d="M0 0h11v11H0z"/>
-                  <path fill="#f35325" d="M12 0h11v11H12z"/>
-                  <path fill="#81bc06" d="M0 12h11v11H0z"/>
-                  <path fill="#05a6f0" d="M12 12h11v11H12z"/>
-                </svg>
-                Continuar com Microsoft
-              </button>
-
-              <div className="relative py-2">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-600"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-3 bg-slate-800 text-gray-400 uppercase text-xs font-bold tracking-wider">ou email acadêmico</span>
-                </div>
+            {/* Left Content */}
+            <div className="space-y-8 animate-fade-in-up">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm">
+                <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                <span className="text-xs font-medium text-cyan-400 tracking-wide uppercase">Nova Geração de Pesquisa</span>
               </div>
-
-              <input
-                type="email"
-                placeholder="nome@universidade.edu.br"
-                className="w-full bg-slate-700/50 border border-cyan-500/30 text-white px-4 py-3.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-slate-400 transition"
-              />
-
-              <button
-                onClick={() => onLogin('email')}
-                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-3.5 rounded-xl hover:shadow-lg hover:shadow-cyan-500/30 transition font-semibold"
-              >
-                Acessar Painel →
-              </button>
-
-              <p className="text-xs text-gray-500 text-center flex items-center justify-center gap-1.5 mt-4">
-                <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                DADOS PROTEGIDOS E COMPLIANCE COM LGPD
+              
+              <h1 className="text-5xl lg:text-7xl font-extrabold text-white leading-[1.1] tracking-tight">
+                Inteligência que <br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 animate-gradient-x">
+                  Publica o Futuro.
+                </span>
+              </h1>
+              
+              <p className="text-lg text-slate-400 leading-relaxed max-w-xl border-l-2 border-slate-700 pl-6">
+                Acelere sua produção científica com a plataforma escolhida pelas maiores instituições do Brasil. 
+                Da ideia à publicação em revistas de alto impacto.
               </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <button 
+                  onClick={() => onLogin('google')}
+                  className="group relative px-8 py-4 bg-cyan-500 rounded-xl font-bold text-white shadow-lg shadow-cyan-500/25 hover:bg-cyan-400 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <span className="relative flex items-center gap-2">
+                    Começar Gratuitamente <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </button>
+                <button className="px-8 py-4 bg-slate-800 rounded-xl font-bold text-white border border-slate-700 hover:bg-slate-700 transition-all hover:border-slate-600 flex items-center gap-2">
+                  <Award className="w-5 h-5 text-yellow-500" />
+                  Conhecer Planos
+                </button>
+              </div>
+            </div>
+
+            {/* Right Content - Login Card */}
+            <div className="relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-20 animate-pulse"></div>
+              <div className="relative bg-slate-900/90 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8 shadow-2xl">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-white mb-2">Login Acadêmico</h3>
+                  <p className="text-slate-400 text-sm">Acesse com suas credenciais institucionais</p>
+                </div>
+
+                <div className="space-y-3">
+                  <button onClick={() => onLogin('google')} className="w-full bg-white hover:bg-slate-50 text-slate-900 font-semibold py-3.5 rounded-xl flex items-center justify-center gap-3 transition-colors group">
+                    <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
+                    <span className="group-hover:text-black">Continuar com Google</span>
+                  </button>
+                  
+                  <button onClick={() => onLogin('microsoft')} className="w-full bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3.5 rounded-xl flex items-center justify-center gap-3 transition-colors border border-slate-700">
+                    <Users className="w-5 h-5" />
+                    <span>Conta Microsoft</span>
+                  </button>
+
+                  <div className="relative py-4">
+                    <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-700"></div></div>
+                    <div className="relative flex justify-center"><span className="bg-slate-900 px-4 text-xs text-slate-500 uppercase tracking-widest font-semibold">Membros</span></div>
+                  </div>
+
+                  <input type="email" placeholder="Seu email institucional" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all placeholder:text-slate-600" />
+                  <button onClick={() => onLogin('email')} className="w-full bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-600 hover:to-slate-700 text-white font-semibold py-3.5 rounded-xl transition-all shadow-lg border border-slate-600">
+                    Entrar com Email
+                  </button>
+                </div>
+                
+                <p className="mt-6 text-center text-xs text-slate-500">
+                  Protegido por criptografia de ponta a ponta. <br/>
+                  <a href="#" className="text-cyan-500 hover:underline">Termos de Uso</a> e <a href="#" className="text-cyan-500 hover:underline">Privacidade</a>.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Partners Section - "Creative Strip" with Official Logos */}
+      <div className="relative border-t border-white/5 bg-slate-950/50 backdrop-blur-sm py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-sm font-semibold text-slate-500 uppercase tracking-[0.3em] mb-14">
+            Ecossistema de Inovação e Parceiros
+          </p>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
+            {partners.map((partner, index) => (
+              <div 
+                key={index} 
+                className="group relative flex items-center justify-center h-28 p-4 rounded-xl bg-white border border-slate-800/50 shadow-lg hover:shadow-cyan-500/10 hover:border-cyan-500/30 transition-all duration-300 overflow-hidden text-slate-900 font-bold text-sm text-center"
+              >
+                {/* Efeito de brilho no hover */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+                {partner.logo ? (
+                  <img 
+                    src={partner.logo} 
+                    alt={partner.name} 
+                    className={`${partner.width || 'w-24'} max-h-16 object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500`}
+                    onError={(e) => {
+                      // Fallback visual se a imagem não carregar
+                      (e.target as HTMLImageElement).style.display = 'none';
+                      (e.target as HTMLImageElement).parentElement!.innerText = partner.name;
+                    }}
+                  />
+                ) : (
+                  <div className="filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+                    {partner.component}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom CTA */}
+      <div className="py-24 bg-gradient-to-b from-slate-900 to-black text-center">
+        <div className="max-w-3xl mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Pronto para elevar sua pesquisa?</h2>
+          <p className="text-slate-400 mb-10 text-lg">Junte-se a pesquisadores das instituições mais respeitadas do país.</p>
+          <button onClick={() => onLogin('google')} className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 font-bold text-lg hover:underline underline-offset-4 transition-all">
+            Criar conta de pesquisador <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+
     </div>
   );
 };

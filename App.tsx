@@ -9,6 +9,7 @@ import Dashboard from './components/Dashboard';
 import ReviewPage from './components/ReviewPage';
 import AcademicIntelligence from './components/AcademicIntelligence';
 import PlaceholderView from './components/PlaceholderView';
+import ScientificCommittee from './components/ScientificCommittee';
 import { User, ViewState, MenuItem } from './types';
 
 export default function App() {
@@ -52,8 +53,13 @@ export default function App() {
     return items.find(i => i.view === view);
   };
 
+  // Se o usuário não estiver logado
   if (!user) {
-    return <LandingPage onLogin={handleLogin} />;
+    if (currentView === 'committee') {
+      return <ScientificCommittee onBack={() => setCurrentView('landing')} />;
+    }
+    // Landing Page agora aceita onNavigate
+    return <LandingPage onLogin={handleLogin} onNavigate={setCurrentView} />;
   }
 
   const currentMenu = getMenuDetails(currentView);

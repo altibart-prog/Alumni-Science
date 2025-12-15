@@ -2,6 +2,7 @@ import { LucideIcon } from 'lucide-react';
 
 export type ViewState = 
   | 'landing' 
+  | 'committee' // Adicionado
   | 'dashboard' 
   | 'review' 
   | 'research' 
