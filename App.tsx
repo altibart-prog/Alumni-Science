@@ -65,7 +65,10 @@ export default function App() {
   const currentMenu = getMenuDetails(currentView);
 
   return (
-    <div className="min-h-screen bg-[#020617] flex font-sans text-slate-50">
+    <div className="min-h-screen flex font-sans text-slate-50 overflow-hidden relative">
+      {/* Global Grain Texture Overlay */}
+      <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-[100]" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}></div>
+
       <Sidebar 
         sidebarOpen={sidebarOpen} 
         setSidebarOpen={setSidebarOpen} 
@@ -75,8 +78,8 @@ export default function App() {
         onLogout={handleLogout}
       />
 
-      <main className={`flex-1 overflow-auto transition-all duration-300 ${sidebarOpen ? 'lg:ml-0' : 'lg:ml-0'}`}>
-        <div className="p-4 md:p-8 pt-20 lg:pt-8">
+      <main className={`flex-1 overflow-auto transition-all duration-300 relative z-10 ${sidebarOpen ? 'lg:ml-0' : 'lg:ml-0'}`}>
+        <div className="p-4 md:p-8 pt-20 lg:pt-8 min-h-full">
           {currentView === 'dashboard' && (
             <Dashboard setCurrentView={setCurrentView} userName={user.name} />
           )}

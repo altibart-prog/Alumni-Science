@@ -16,7 +16,10 @@
       }
       body {
         font-family: var(--font-body);
-        background-color: #020617; /* Slate 950 base */
+        /* Deep Space Holographic Background */
+        background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0f172a 40%, #020617 100%);
+        background-attachment: fixed;
+        color: #f8fafc;
       }
       h1, h2, h3, h4, h5, h6 {
         font-family: var(--font-heading);
@@ -27,14 +30,25 @@
         height: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: #0f172a;
+        background: rgba(2, 6, 23, 0.5);
       }
       ::-webkit-scrollbar-thumb {
-        background: #334155;
-        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #475569;
+        background: rgba(255, 255, 255, 0.2);
+      }
+      
+      /* Global Animation Utilities */
+      .animate-gradient-x {
+        background-size: 200% 200%;
+        animation: gradient-x 15s ease infinite;
+      }
+      @keyframes gradient-x {
+        0% { background-position: 0% 50% }
+        50% { background-position: 100% 50% }
+        100% { background-position: 0% 50% }
       }
     </style>
   <script type="importmap">
