@@ -3,7 +3,7 @@ import {
   BookOpen, Users, FileText, MessageSquare, Search, Award, 
   PenTool, FileSearch, Bot, FileCheck, FileEdit, Database, Home, Menu 
 } from 'lucide-react';
-import LandingPage from './components/LandingPage';
+import LandingPage, { GoldenEagleIcon } from './components/LandingPage';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import ReviewPage from './components/ReviewPage';
@@ -82,9 +82,12 @@ export default function App() {
            >
              <Menu className="w-6 h-6" />
            </button>
-           <div className="ml-4 flex items-baseline gap-1">
-              <span className="font-black text-lg text-white tracking-tighter">ALUMNI</span>
-              <span className="font-black text-lg text-amber-400 tracking-tighter">INDEX</span>
+           <div className="ml-4 flex items-center gap-2">
+              <GoldenEagleIcon className="w-7 h-6" />
+              <div className="flex items-center">
+                <span className="font-black text-lg text-white tracking-tighter">ALUMNI</span>
+                <span className="font-black text-lg text-amber-400 tracking-tighter ml-1">INDEX</span>
+              </div>
            </div>
         </header>
 

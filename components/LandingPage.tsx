@@ -8,30 +8,31 @@ import {
 } from 'lucide-react';
 import { ViewState } from '../types';
 
-const GoldenEagleIcon = ({ className = "w-12 h-10" }: { className?: string }) => (
-  <svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg" className={`${className} drop-shadow-[0_0_20px_rgba(251,191,36,0.6)]`}>
-    {/* Wing Layers */}
-    <path d="M10 30L35 15L50 25L65 15L90 30" stroke="url(#goldGradient)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M15 40L35 28L50 38L65 28L85 40" stroke="url(#goldGradient)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M20 50L35 41L50 51L65 41L80 50" stroke="url(#goldGradient)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+export const GoldenEagleIcon = ({ className = "w-12 h-10" }: { className?: string }) => (
+  <svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg" className={`${className} drop-shadow-[0_0_12px_rgba(212,175,55,0.4)]`}>
+    {/* Geometric Head */}
+    <path d="M50 8L55 13H45L50 8Z" fill="url(#goldGradient)"/>
     
-    {/* Central Head / Body Structure */}
-    <path d="M50 10L55 15L50 20L45 15L50 10Z" fill="url(#goldGradient)"/>
+    {/* Upper Wing Layers - Precision Chevrons from reference */}
+    <path d="M12 40L36 16L50 30L64 16L88 40" stroke="url(#goldGradient)" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M22 44L40 26L50 36L60 26L78 44" stroke="url(#goldGradient)" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
     
-    {/* Central Cross / "Barbell" Element */}
-    <path d="M38 55L50 67L62 55" stroke="url(#goldGradient)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M30 55H35V50H30V55Z" fill="url(#goldGradient)"/>
-    <path d="M65 55H70V50H65V55Z" fill="url(#goldGradient)"/>
+    {/* Central Barbell/Scale Element from reference image */}
+    <path d="M28 58H32V52H28V58Z" fill="url(#goldGradient)"/>
+    <path d="M36 55H64" stroke="url(#goldGradient)" strokeWidth="3.5" strokeLinecap="round"/>
+    <path d="M68 58H72V52H68V58Z" fill="url(#goldGradient)"/>
+    <path d="M35 52V58M65 52V58" stroke="url(#goldGradient)" strokeWidth="3" strokeLinecap="round"/>
     
-    {/* Base Diamond */}
-    <path d="M50 72L54 76L50 80L46 76L50 72Z" fill="url(#goldGradient)"/>
-    <path d="M42 68L50 76L58 68" stroke="url(#goldGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    {/* X-Intersection and Lower Diamond Base */}
+    <path d="M38 42L50 54L62 42" stroke="url(#goldGradient)" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M42 64L50 72L58 64" stroke="url(#goldGradient)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M50 70L54 75L50 80L46 75L50 70Z" fill="url(#goldGradient)"/>
 
     <defs>
-      <linearGradient id="goldGradient" x1="10" y1="10" x2="90" y2="80" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#FDE68A" />
-        <stop offset="0.5" stopColor="#FBBF24" />
-        <stop offset="1" stopColor="#D97706" />
+      <linearGradient id="goldGradient" x1="12" y1="8" x2="88" y2="80" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#D4AF37" />
+        <stop offset="0.5" stopColor="#B8860B" />
+        <stop offset="1" stopColor="#8B6914" />
       </linearGradient>
     </defs>
   </svg>
@@ -65,14 +66,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onNavigate }) => {
       <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#020617]/80 backdrop-blur-xl transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <div className="flex items-center gap-3 cursor-pointer group" onClick={() => onNavigate('landing')}>
-              <GoldenEagleIcon className="w-10 h-8 md:w-12 md:h-10" />
-              <div className="flex flex-col">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-xl md:text-3xl font-black tracking-tighter text-white font-heading leading-none">ALUMNI</span>
-                  <span className="text-xl md:text-3xl font-black tracking-tighter text-[#FBBF24] font-heading leading-none">INDEX</span>
-                </div>
-                <span className="hidden xs:block text-[8px] md:text-[9px] tracking-[0.3em] md:tracking-[0.45em] text-slate-400 uppercase font-bold mt-1 ml-0.5">SOVEREIGN ACADEMIC INTELLIGENCE</span>
+            <div className="flex items-center gap-4 cursor-pointer group" onClick={() => onNavigate('landing')}>
+              <GoldenEagleIcon className="w-10 h-8 md:w-14 md:h-11 transition-transform group-hover:scale-110" />
+              <div className="flex items-center ml-2">
+                <span className="text-xl md:text-[28px] font-black tracking-[-0.03em] text-white font-heading leading-none">ALUMNI</span>
+                <span className="text-xl md:text-[28px] font-black tracking-[-0.03em] text-[#FBBF24] font-heading leading-none ml-1.5">INDEX</span>
               </div>
             </div>
 
@@ -85,7 +83,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onNavigate }) => {
                
                <button 
                 onClick={() => onLogin('google')}
-                className="inline-flex h-10 md:h-12 items-center justify-center rounded-xl md:rounded-2xl bg-white px-4 md:px-8 font-black text-slate-950 transition-all hover:bg-amber-400 active:scale-95"
+                className="inline-flex h-10 md:h-12 items-center justify-center rounded-xl md:rounded-2xl bg-white px-4 md:px-8 font-black text-slate-950 transition-all hover:bg-amber-400 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(251,191,36,0.3)]"
               >
                 <span className="text-[9px] md:text-[10px] uppercase tracking-widest flex items-center gap-2">
                   <span className="hidden xs:inline">ACESSAR</span> PLATAFORMA
@@ -232,7 +230,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onNavigate }) => {
             <div className="flex flex-col items-center md:items-start gap-4 md:gap-6">
                <div className="flex items-center gap-3">
                   <GoldenEagleIcon className="w-8 h-7 md:w-10 md:h-9" />
-                  <span className="text-2xl md:text-3xl font-black text-white font-heading tracking-tighter">ALUMNI <span className="text-amber-400">INDEX</span></span>
+                  <div className="flex items-center">
+                    <span className="text-2xl md:text-3xl font-black text-white font-heading tracking-tighter">ALUMNI</span>
+                    <span className="text-2xl md:text-3xl font-black text-[#FBBF24] font-heading tracking-tighter ml-1.5">INDEX</span>
+                  </div>
                </div>
                <p className="text-[10px] md:text-sm font-black uppercase tracking-widest opacity-60">© 2024 Alumni Index Sovereign Platform. Todas as Áreas CAPES.</p>
             </div>
