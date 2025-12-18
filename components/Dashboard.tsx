@@ -16,215 +16,180 @@ const Dashboard: React.FC<DashboardProps> = ({ setCurrentView, userName }) => {
     <div className="animate-fade-in pb-10 text-slate-200">
       
       {/* Welcome Section */}
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-12 relative z-10">
-        <div>
-          <div className="flex items-center gap-2 mb-3">
-            <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-cyan-300 uppercase tracking-widest shadow-[0_0_10px_rgba(34,211,238,0.1)] backdrop-blur-md">
-              Laboratório Pessoal
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12 relative z-10">
+        <div className="w-full text-center lg:text-left">
+          <div className="flex items-center justify-center lg:justify-start gap-2 mb-4">
+            <span className="px-3 md:px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-[9px] md:text-[10px] font-black text-cyan-300 uppercase tracking-widest shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+              Central de Inteligência
             </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
           </div>
-          <h1 className="text-4xl lg:text-6xl font-extrabold text-white tracking-tight font-heading leading-[1.1]">
-            Olá, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-300 to-indigo-300 drop-shadow-[0_0_15px_rgba(34,211,238,0.2)]">{userName}</span>
+          <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black text-white tracking-tighter font-heading leading-tight drop-shadow-2xl">
+            Olá, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-[#e0faff] to-indigo-300">{userName}</span>
           </h1>
-          <p className="text-slate-300 text-lg max-w-xl mt-3 font-medium leading-relaxed">
-            Sua central de inteligência está calibrada. <span className="text-white">O que vamos descobrir hoje?</span>
+          <p className="text-slate-400 text-lg md:text-xl max-w-xl mt-4 font-bold leading-relaxed mx-auto lg:mx-0">
+            Seu núcleo de pesquisa está online. <span className="text-white">Qual o insight de hoje?</span>
           </p>
         </div>
         
-        {/* Holographic Stats Widgets */}
-        <div className="flex gap-4 w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0">
-          <div className="group relative bg-white/[0.02] backdrop-blur-md px-6 py-5 rounded-3xl border border-white/10 hover:border-cyan-400/30 transition-all duration-500 min-w-[170px] overflow-hidden hover:shadow-[0_0_30px_rgba(34,211,238,0.1)]">
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <p className="text-xs font-bold text-cyan-300 uppercase tracking-widest mb-3 font-heading flex items-center gap-2">
-              <Zap className="w-3.5 h-3.5" /> Créditos
+        {/* Luminous Stats Widgets - Scrollable on mobile */}
+        <div className="flex gap-4 md:gap-6 w-full lg:w-auto overflow-x-auto pb-4 lg:pb-0 px-2 lg:px-0 no-scrollbar">
+          <div className="flex-shrink-0 group relative bg-[#0c1a2d]/80 backdrop-blur-2xl px-6 md:px-8 py-5 md:py-6 rounded-[1.5rem] md:rounded-[2rem] border border-cyan-500/30 min-w-[160px] md:min-w-[200px]">
+            <p className="text-[9px] md:text-[10px] font-black text-cyan-400 uppercase tracking-widest mb-3 md:mb-4 flex items-center gap-2">
+              <Zap className="w-3 md:w-4 h-3 md:h-4" /> Créditos
             </p>
-            <div className="flex items-end gap-2 relative z-10">
-              <span className="text-4xl font-black text-white tracking-tight drop-shadow-lg">100</span>
-              <span className="text-[10px] text-cyan-950 font-bold bg-cyan-400 px-2 py-0.5 rounded-md mb-2 shadow-[0_0_15px_rgba(34,211,238,0.6)]">+20</span>
+            <div className="flex items-end gap-2 md:gap-3">
+              <span className="text-3xl md:text-5xl font-black text-white tracking-tighter">100</span>
+              <span className="text-[9px] md:text-[11px] text-cyan-950 font-black bg-cyan-400 px-2 py-0.5 rounded-md mb-1.5">+20</span>
             </div>
           </div>
           
-          <div className="group relative bg-white/[0.02] backdrop-blur-md px-6 py-5 rounded-3xl border border-white/10 hover:border-fuchsia-400/30 transition-all duration-500 min-w-[170px] overflow-hidden hover:shadow-[0_0_30px_rgba(232,121,249,0.1)]">
-            <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <p className="text-xs font-bold text-fuchsia-300 uppercase tracking-widest mb-3 font-heading flex items-center gap-2">
-              <Activity className="w-3.5 h-3.5" /> Avaliações
+          <div className="flex-shrink-0 group relative bg-[#1a0c2e]/80 backdrop-blur-2xl px-6 md:px-8 py-5 md:py-6 rounded-[1.5rem] md:rounded-[2rem] border border-fuchsia-500/30 min-w-[160px] md:min-w-[200px]">
+            <p className="text-[9px] md:text-[10px] font-black text-fuchsia-400 uppercase tracking-widest mb-3 md:mb-4 flex items-center gap-2">
+              <Activity className="w-3 md:w-4 h-3 md:h-4" /> Atividade
             </p>
-            <div className="flex items-end gap-2 relative z-10">
-              <span className="text-4xl font-black text-white tracking-tight drop-shadow-lg">12</span>
-              <span className="text-[10px] text-slate-400 font-bold mb-2 uppercase">/mês</span>
+            <div className="flex items-end gap-2 md:gap-3">
+              <span className="text-3xl md:text-5xl font-black text-white tracking-tighter">12</span>
+              <span className="text-[10px] text-slate-500 font-black mb-1.5 uppercase tracking-widest">Aval.</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-8 relative z-10">
-        {/* Left Column - Main Content */}
-        <div className="col-span-12 lg:col-span-8 space-y-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+        <div className="lg:col-span-8 space-y-8">
           
-          {/* Holographic Hero Card */}
-          <div className="relative overflow-hidden rounded-[3rem] shadow-2xl border border-white/10 group cursor-default bg-white/[0.02] backdrop-blur-xl">
-            {/* Holographic Background */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-cyan-400/10 via-purple-500/10 to-transparent rounded-full blur-[80px] -mr-24 -mt-24 pointer-events-none group-hover:bg-cyan-400/20 transition duration-1000"></div>
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-fuchsia-500/5 to-transparent rounded-full blur-[60px] -ml-20 -mb-20 pointer-events-none"></div>
-            
-            {/* Grid Overlay */}
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] mix-blend-overlay"></div>
+          {/* Main Hero Card - Mobile Optimized Padding */}
+          <div className="relative overflow-hidden rounded-[2.5rem] md:rounded-[3.5rem] border border-white/10 bg-[#0c1a2d]/60 backdrop-blur-3xl group">
+            <div className="absolute top-0 right-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-cyan-400/10 rounded-full blur-[80px] md:blur-[100px] -mr-32 -mt-32 pointer-events-none group-hover:opacity-100 transition-opacity opacity-50"></div>
 
-            <div className="relative z-10 p-10 sm:p-14">
-              <div className="flex items-start justify-between mb-10">
-                <div className="w-18 h-18 p-4 bg-white/5 rounded-3xl backdrop-blur-md border border-white/10 shadow-[0_0_30px_rgba(255,255,255,0.05)] flex items-center justify-center">
-                  <FileCheck className="w-10 h-10 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" />
+            <div className="relative z-10 p-8 md:p-12 lg:p-16">
+              <div className="flex items-start justify-between mb-8 md:mb-12">
+                <div className="w-14 h-14 md:w-20 md:h-20 p-4 md:p-5 bg-cyan-500/10 rounded-2xl md:rounded-[2rem] border border-cyan-400/40 shadow-2xl flex items-center justify-center">
+                  <FileCheck className="w-7 md:w-10 h-7 md:h-10 text-cyan-300" />
                 </div>
-                <span className="bg-white/5 backdrop-blur-md border border-white/10 text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wide flex items-center gap-2 shadow-lg">
-                  <Stars className="w-3 h-3 text-cyan-300" />
+                <span className="hidden sm:flex bg-white/5 backdrop-blur-xl border border-white/10 text-white text-[9px] md:text-[10px] font-black px-4 md:px-5 py-2 md:py-2.5 rounded-2xl uppercase tracking-widest items-center gap-2">
+                  <Stars className="w-3 md:w-4 h-3 md:h-4 text-cyan-300 animate-pulse" />
                   IA Generativa v2.5
                 </span>
               </div>
               
-              <div className="max-w-2xl">
-                <h2 className="text-4xl sm:text-5xl font-black mb-6 leading-[1.05] font-heading tracking-tight text-white drop-shadow-xl">
-                  Avaliação de Artigos <br/>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-300 animate-gradient-x">
-                    Nível Peer-Review
+              <div className="max-w-2xl text-center md:text-left">
+                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 md:mb-8 leading-tight font-heading tracking-tight text-white">
+                  Avaliação de Artigos <br className="hidden sm:block" />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 via-white to-indigo-300">
+                    Alta Performance
                   </span>
                 </h2>
-                <p className="text-blue-100/70 text-lg mb-12 leading-relaxed font-medium max-w-xl">
-                  Obtenha um parecer técnico detalhado em segundos. Analise metodologia, ineditismo e estrutura com a precisão dos maiores journals do mundo.
+                <p className="text-blue-100/70 text-base md:text-xl mb-10 md:mb-14 leading-relaxed font-bold max-w-xl mx-auto md:mx-0">
+                  Pareceres técnicos instantâneos. Prepare seu manuscrito para journals Q1 do mundo todo.
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-5">
+              <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6">
                 <button 
                   onClick={() => setCurrentView('review')}
-                  className="bg-white text-slate-950 px-10 py-4 rounded-2xl font-black hover:bg-cyan-50 transition-all flex items-center gap-3 shadow-[0_0_40px_rgba(255,255,255,0.1)] hover:shadow-[0_0_50px_rgba(34,211,238,0.4)] hover:-translate-y-1 duration-300 font-heading tracking-wide group/btn"
+                  className="w-full sm:w-auto bg-white text-slate-950 px-8 md:px-12 py-4 md:py-5 rounded-xl md:rounded-2xl font-black text-xs md:text-sm hover:bg-cyan-400 transition-all flex items-center justify-center gap-3 shadow-xl hover:-translate-y-1"
                 >
-                  <Sparkles className="w-5 h-5 fill-slate-950 text-slate-950" />
+                  <Sparkles className="w-5 h-5" />
                   INICIAR AVALIAÇÃO
                 </button>
-                <button className="px-8 py-4 rounded-2xl font-bold text-white hover:bg-white/10 transition flex items-center gap-2 border border-white/10 hover:border-white/30 tracking-wide backdrop-blur-sm">
-                  <Clock className="w-4 h-4 text-cyan-200" />
+                <button className="w-full sm:w-auto px-8 py-4 md:py-5 rounded-xl md:rounded-2xl font-black text-[10px] md:text-xs text-white hover:bg-white/10 border border-white/10 tracking-widest uppercase flex items-center justify-center gap-2">
+                  <Clock className="w-4 h-4" />
                   Histórico
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Lighter Quick Access Grid */}
-          <div className="grid md:grid-cols-2 gap-6">
-            
-            {/* Chat PDF (Lighter Amber/Orange) */}
+          {/* Quick Access Grid - Stacks on mobile */}
+          <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
             <div 
               onClick={() => setCurrentView('chat')}
-              className="bg-white/[0.02] backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/10 shadow-xl hover:shadow-[0_0_40px_rgba(251,146,60,0.1)] hover:border-orange-300/30 transition-all cursor-pointer group relative overflow-hidden"
+              className="bg-[#25150c]/60 backdrop-blur-2xl p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-orange-500/20 shadow-2xl hover:border-orange-400/50 transition-all cursor-pointer group"
             >
-              <div className="absolute -top-20 -right-20 w-60 h-60 bg-orange-400/10 rounded-full blur-[80px] group-hover:bg-orange-400/20 transition-all duration-700"></div>
-              <div className="relative z-10">
-                <div className="w-14 h-14 bg-gradient-to-br from-orange-400/10 to-amber-300/10 rounded-2xl flex items-center justify-center mb-6 border border-orange-400/20 group-hover:scale-110 transition-transform duration-500 shadow-[0_0_20px_rgba(251,146,60,0.1)]">
-                  <MessageSquare className="w-7 h-7 text-orange-200" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2 font-heading">Chat PDF</h3>
-                <p className="text-slate-400 text-sm leading-relaxed mb-6 font-medium">
-                  Interaja com documentos. Extraia insights e tire dúvidas instantaneamente.
-                </p>
-                <span className="text-orange-300 text-xs font-black uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
-                  Abrir Chat <ArrowRight className="w-3 h-3" />
-                </span>
+              <div className="w-12 h-12 md:w-16 md:h-16 bg-orange-500/10 rounded-xl md:rounded-[1.5rem] flex items-center justify-center mb-6 md:mb-8 border border-orange-400/30">
+                <MessageSquare className="w-6 md:w-8 h-6 md:h-8 text-orange-300" />
               </div>
+              <h3 className="text-xl md:text-2xl font-black text-white mb-2 md:mb-3 font-heading tracking-tight">Chat PDF</h3>
+              <p className="text-sm md:text-base text-slate-400 leading-relaxed mb-6 md:mb-8 font-bold">
+                Interaja com seus documentos. Extraia insights e cite com precisão.
+              </p>
+              <span className="text-orange-400 text-[10px] md:text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                Abrir <ArrowRight className="w-3 h-3" />
+              </span>
             </div>
 
-            {/* Literature Review (Lighter Emerald/Teal) */}
             <div 
               onClick={() => setCurrentView('literature')}
-              className="bg-white/[0.02] backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/10 shadow-xl hover:shadow-[0_0_40px_rgba(45,212,191,0.1)] hover:border-teal-300/30 transition-all cursor-pointer group relative overflow-hidden"
+              className="bg-[#0b201a]/60 backdrop-blur-2xl p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-teal-500/20 shadow-2xl hover:border-teal-400/50 transition-all cursor-pointer group"
             >
-              <div className="absolute -top-20 -right-20 w-60 h-60 bg-teal-400/10 rounded-full blur-[80px] group-hover:bg-teal-400/20 transition-all duration-700"></div>
-              <div className="relative z-10">
-                <div className="w-14 h-14 bg-gradient-to-br from-teal-400/10 to-emerald-300/10 rounded-2xl flex items-center justify-center mb-6 border border-teal-400/20 group-hover:scale-110 transition-transform duration-500 shadow-[0_0_20px_rgba(45,212,191,0.1)]">
-                  <Microscope className="w-7 h-7 text-teal-200" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2 font-heading">Review Literatura</h3>
-                <p className="text-slate-400 text-sm leading-relaxed mb-6 font-medium">
-                  Mapeie o estado da arte. Encontre referências globais para sua pesquisa.
-                </p>
-                <span className="text-teal-300 text-xs font-black uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
-                  Iniciar Busca <ArrowRight className="w-3 h-3" />
-                </span>
+              <div className="w-12 h-12 md:w-16 md:h-16 bg-teal-500/10 rounded-xl md:rounded-[1.5rem] flex items-center justify-center mb-6 md:mb-8 border border-teal-400/30">
+                <Microscope className="w-6 md:w-8 h-6 md:h-8 text-teal-300" />
               </div>
+              <h3 className="text-xl md:text-2xl font-black text-white mb-2 md:mb-3 font-heading tracking-tight">Review Literatura</h3>
+              <p className="text-sm md:text-base text-slate-400 leading-relaxed mb-6 md:mb-8 font-bold">
+                Mapeie o estado da arte. Encontre lacunas de pesquisa global.
+              </p>
+              <span className="text-teal-400 text-[10px] md:text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                Explorar <ArrowRight className="w-3 h-3" />
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Right Column - Sidebar Widgets */}
-        <div className="col-span-12 lg:col-span-4 space-y-8">
+        {/* Right Column - Stacked on mobile */}
+        <div className="lg:col-span-4 space-y-8">
           
-          {/* Lighter Search Widget */}
-          <div className="bg-white/5 p-2 rounded-3xl border border-white/10 shadow-xl focus-within:ring-1 focus-within:ring-cyan-400/30 transition-all focus-within:bg-white/10 backdrop-blur-md">
-            <div className="relative bg-transparent rounded-2xl overflow-hidden">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+          {/* Search bar - Mobile height reduction */}
+          <div className="bg-white/5 p-1.5 rounded-2xl border border-white/10 shadow-xl backdrop-blur-xl">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-cyan-400/60" />
               <input 
                 type="text" 
-                placeholder="Buscar (Ctrl + K)" 
-                className="w-full bg-transparent border-none pl-12 pr-4 py-4 text-sm text-white focus:outline-none placeholder:text-slate-500 font-bold"
+                placeholder="Busca Global" 
+                className="w-full bg-transparent border-none pl-11 pr-4 py-4 text-xs md:text-sm text-white focus:outline-none placeholder:text-slate-600 font-bold"
               />
             </div>
           </div>
 
-          {/* Activity Feed */}
-          <div className="bg-white/[0.02] backdrop-blur-xl rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden flex flex-col h-[450px] relative">
-            <div className="p-8 border-b border-white/5 flex justify-between items-center bg-white/[0.02]">
-              <h3 className="font-bold text-white font-heading text-sm uppercase tracking-wider">Timeline</h3>
-              <div className="flex gap-2">
-                 <div className="w-2 h-2 rounded-full bg-white/20"></div>
-                 <div className="w-2 h-2 rounded-full bg-white/20"></div>
-              </div>
+          <div className="bg-[#0f172a]/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/10 shadow-2xl flex flex-col h-[400px] md:h-[500px]">
+            <div className="p-6 md:p-8 border-b border-white/5 bg-white/[0.02]">
+              <h3 className="font-black text-white font-heading text-[10px] uppercase tracking-[0.2em]">Timeline Ativa</h3>
             </div>
             
-            <div className="flex-1 overflow-y-auto p-8 space-y-8 custom-scrollbar relative">
-               <div className="absolute left-11 top-8 bottom-8 w-px bg-gradient-to-b from-white/10 to-transparent"></div>
-
-              {/* Empty State */}
-              <div className="text-center py-20 opacity-60 relative z-10">
-                <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center mx-auto mb-6 border border-white/10 shadow-inner transform rotate-6 backdrop-blur-md">
-                  <Clock className="w-8 h-8 text-slate-400" />
+            <div className="flex-1 overflow-y-auto p-8 space-y-6">
+              <div className="text-center py-12 md:py-24 opacity-60">
+                <div className="w-16 h-16 md:w-20 md:h-20 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/10">
+                  <Clock className="w-8 h-8 text-slate-500" />
                 </div>
-                <p className="text-base font-bold text-white mb-2">Silêncio no Laboratório</p>
-                <p className="text-sm text-slate-400 max-w-[180px] mx-auto leading-relaxed">Suas atividades de pesquisa aparecerão aqui.</p>
+                <p className="text-base md:text-lg font-black text-white mb-1 tracking-tight">Sem atividades</p>
+                <p className="text-xs text-slate-500 font-bold">Suas interações aparecerão aqui.</p>
               </div>
-            </div>
-            
-            <div className="p-6 bg-white/[0.02] border-t border-white/5 backdrop-blur-xl">
-              <button className="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs font-bold text-white uppercase tracking-wider transition-all flex items-center justify-center gap-2 hover:border-white/20 hover:shadow-lg">
-                <FileText className="w-4 h-4 text-cyan-300" />
-                Upload Rápido
-              </button>
             </div>
           </div>
 
-          {/* Bright Promo Widget (Pink/Rose) */}
-          <div className="group relative rounded-[2.5rem] p-8 text-white overflow-hidden shadow-2xl border border-white/20 bg-white/[0.05] backdrop-blur-xl">
-            <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 via-rose-500/10 to-orange-500/10 transition-transform duration-700 group-hover:scale-105"></div>
-            <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-[50px] -mr-10 -mt-10 pointer-events-none mix-blend-overlay"></div>
-            
+          {/* Neural Writer Promo - More compact on mobile */}
+          <div className="group relative rounded-[2rem] md:rounded-[3rem] p-8 md:p-10 text-white overflow-hidden border border-[#f43f5e]/30 bg-[#200e12]/60 backdrop-blur-3xl transition-all">
             <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-6">
-                <div className="p-2 bg-white/10 rounded-xl backdrop-blur-md border border-white/10">
-                   <PenTool className="w-4 h-4 text-white" />
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2.5 bg-[#f43f5e]/20 rounded-xl border border-[#f43f5e]/30">
+                   <PenTool className="w-4 h-4 text-[#f43f5e]" />
                 </div>
-                <span className="text-[10px] font-bold tracking-[0.2em] uppercase opacity-90 drop-shadow-md">Novidade</span>
+                <span className="text-[10px] font-black tracking-widest uppercase text-[#f43f5e]">Exclusivo PRO</span>
               </div>
               
-              <h4 className="text-2xl font-black mb-3 font-heading drop-shadow-md">Redator Neural</h4>
-              <p className="text-sm leading-relaxed mb-8 text-white/80 font-medium">
-                Transforme tópicos soltos em parágrafos acadêmicos fundamentados automaticamente.
+              <h4 className="text-2xl font-black mb-3 font-heading tracking-tight">Redator Neural</h4>
+              <p className="text-sm md:text-base leading-relaxed mb-8 text-slate-300 font-bold">
+                Acelere sua escrita científica com fundamentos densos.
               </p>
               
               <button 
                 onClick={() => setCurrentView('writer')}
-                className="w-full text-xs font-black bg-white text-rose-600 hover:bg-rose-50 px-6 py-4 rounded-xl transition shadow-[0_10px_20px_rgba(0,0,0,0.1)] flex justify-between items-center group/btn uppercase tracking-wide"
+                className="w-full text-[10px] font-black bg-white text-[#f43f5e] px-6 py-4 rounded-xl transition-all shadow-xl flex justify-between items-center uppercase tracking-widest"
               >
-                <span>Experimentar Agora</span>
-                <ArrowRight className="w-3.5 h-3.5 transform group-hover/btn:translate-x-1 transition-transform" />
+                <span>Ativar Módulo</span>
+                <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </div>

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Atom, FlaskConical, Wrench, Heart, Sprout, Scale, Users, PenTool, LayoutGrid, 
   ChevronLeft, ArrowRight, Target, ShieldCheck, BarChart3, 
   Search, Settings, FileText, Globe, BookCopy,
   Layers, ChevronRight, GraduationCap, Zap, Sparkles, Divide,
-  Cpu, GitBranch, Share2, Lock,  Box, Monitor, Mic, Anchor, Database
+  Cpu, GitBranch, Share2,  Box, Gavel, ScrollText, CheckCircle2, XCircle, Info,
+  Database, Gauge, Award, Lightbulb
 } from 'lucide-react';
 
 // --- Types ---
@@ -37,539 +38,418 @@ const AcademicIntelligence: React.FC = () => {
   const [selectedSpecificArea, setSelectedSpecificArea] = useState<string | null>(null);
   const [activeModule, setActiveModule] = useState<string | null>(null);
 
-  // --- Dados das Áreas (Taxonomia CNPq Atualizada) ---
+  // Law Dashboard State
+  const [simJournalLevel, setSimJournalLevel] = useState<string>('1');
+  const [simArticleMerit, setSimArticleMerit] = useState<string>('yes');
+
+  // Módulo I Simulator State
+  const [techCategory, setTechCategory] = useState<string>('Patente');
+  const [scoreInnovation, setScoreInnovation] = useState<number>(3); // 1-5
+  const [scoreComplexity, setScoreComplexity] = useState<number>(3); // 1-5
+  const [scoreImpact, setScoreImpact] = useState<number>(3); // 1-5
+  const [scoreApplicability, setScoreApplicability] = useState<number>(3); // 1-5
+
+  // --- Full CNPq Taxonomy (9 Major Areas) ---
   const areas: Area[] = [
     {
-      id: '1.00.00.00-3', name: 'Ciências Exatas e da Terra', icon: Atom,
-      theme: 'cyan',
-      description: 'Matemática, Física, Química e Computação.',
-      specificAreas: [
-        'Matemática', 'Probabilidade e Estatística', 'Ciência da Computação', 
-        'Astronomia', 'Física', 'Química', 'Geociências', 'Oceanografia'
-      ]
+      id: '1', name: 'Ciências Exatas e da Terra', icon: Atom, theme: 'cyan',
+      description: 'Matemática, Física, Química, Computação e Geociências.',
+      specificAreas: ['Matemática', 'Física', 'Química', 'Ciência da Computação', 'Geociências', 'Estatística']
     },
     {
-      id: '2.00.00.00-6', name: 'Ciências Biológicas', icon: FlaskConical,
-      theme: 'emerald',
-      description: 'Genética, Botânica, Zoologia e Ecologia.',
-      specificAreas: [
-        'Biologia Geral', 'Genética', 'Botânica', 'Zoologia', 'Ecologia', 
-        'Morfologia', 'Fisiologia', 'Bioquímica', 'Biofísica', 'Farmacologia', 
-        'Imunologia', 'Microbiologia', 'Parasitologia'
-      ]
+      id: '2', name: 'Ciências Biológicas', icon: FlaskConical, theme: 'emerald',
+      description: 'Genética, Botânica, Zoologia, Ecologia e Morfologia.',
+      specificAreas: ['Biologia Geral', 'Genética', 'Botânica', 'Zoologia', 'Ecologia', 'Bioquímica']
     },
     {
-      id: '3.00.00.00-9', name: 'Engenharias', icon: Wrench,
-      theme: 'indigo',
-      description: 'Civil, Elétrica, Mecânica e Materiais.',
-      specificAreas: [
-        'Engenharia Civil', 'Engenharia de Minas', 'Engenharia de Materiais e Metalúrgica', 
-        'Engenharia Elétrica', 'Engenharia Mecânica', 'Engenharia Química', 
-        'Engenharia Sanitária', 'Engenharia de Produção', 'Engenharia Nuclear', 
-        'Engenharia de Transportes', 'Engenharia Naval e Oceânica', 
-        'Engenharia Aeroespacial', 'Engenharia Biomédica'
-      ]
+      id: '3', name: 'Engenharias', icon: Wrench, theme: 'indigo',
+      description: 'Civil, Elétrica, Mecânica, Química e de Produção.',
+      specificAreas: ['Engenharia Civil', 'Engenharia Elétrica', 'Engenharia Mecânica', 'Engenharia de Produção']
     },
     {
-      id: '4.00.00.00-1', name: 'Ciências da Saúde', icon: Heart,
-      theme: 'rose',
-      description: 'Medicina, Odontologia e Saúde Coletiva.',
-      specificAreas: [
-        'Medicina', 'Odontologia', 'Farmácia', 'Enfermagem', 'Nutrição', 
-        'Saúde Coletiva', 'Fonoaudiologia', 'Fisioterapia e Terapia Ocupacional', 
-        'Educação Física'
-      ]
+      id: '4', name: 'Ciências da Saúde', icon: Heart, theme: 'rose',
+      description: 'Medicina, Odontologia, Farmácia e Enfermagem.',
+      specificAreas: ['Medicina', 'Odontologia', 'Farmácia', 'Enfermagem', 'Saúde Coletiva']
     },
     {
-      id: '5.00.00.00-4', name: 'Ciências Agrárias', icon: Sprout,
-      theme: 'lime',
+      id: '5', name: 'Ciências Agrárias', icon: Sprout, theme: 'lime',
       description: 'Agronomia, Zootecnia e Recursos Florestais.',
-      specificAreas: [
-        'Agronomia', 'Recursos Florestais e Engenharia Florestal', 
-        'Engenharia Agrícola', 'Zootecnia', 'Medicina Veterinária', 
-        'Recursos Pesqueiros e Engenharia de Pesca', 'Ciência e Tecnologia de Alimentos'
-      ]
+      specificAreas: ['Agronomia', 'Zootecnia', 'Medicina Veterinária', 'Recursos Pesqueiros']
     },
     {
-      id: '6.00.00.00-7', name: 'Ciências Sociais Aplicadas', icon: Scale,
-      theme: 'amber',
-      description: 'Direito, Administração e Economia.',
-      specificAreas: [
-        'Direito', 'Administração', 'Economia', 'Arquitetura e Urbanismo', 
-        'Planejamento Urbano e Regional', 'Demografia', 'Ciência da Informação', 
-        'Museologia', 'Comunicação', 'Serviço Social', 'Economia Doméstica', 
-        'Desenho Industrial', 'Turismo'
-      ]
+      id: '6', name: 'Ciências Sociais Aplicadas', icon: Scale, theme: 'amber',
+      description: 'Direito, Administração, Economia e Comunicação.',
+      specificAreas: ['Direito', 'Administração', 'Economia', 'Comunicação', 'Arquitetura']
     },
     {
-      id: '7.00.00.00-0', name: 'Ciências Humanas', icon: Users,
-      theme: 'orange',
+      id: '7', name: 'Ciências Humanas', icon: Users, theme: 'orange',
       description: 'Filosofia, Sociologia, História e Educação.',
-      specificAreas: [
-        'Filosofia', 'Sociologia', 'Antropologia', 'Arqueologia', 'História', 
-        'Geografia', 'Psicologia', 'Educação', 'Ciência Política', 'Teologia'
-      ]
+      specificAreas: ['Filosofia', 'Sociologia', 'História', 'Educação', 'Psicologia']
     },
     {
-      id: '8.00.00.00-2', name: 'Linguística, Letras e Artes', icon: PenTool,
-      theme: 'fuchsia',
-      description: 'Linguística, Letras e Artes.',
-      specificAreas: [
-        'Linguística', 'Letras', 'Artes'
-      ]
+      id: '8', name: 'Linguística, Letras e Artes', icon: PenTool, theme: 'fuchsia',
+      description: 'Linguística, Letras, Artes e Música.',
+      specificAreas: ['Linguística', 'Letras', 'Artes', 'Música', 'Dança']
     },
     {
-      id: '9.00.00.00-5', name: 'Outros', icon: LayoutGrid,
-      theme: 'slate',
-      description: 'Multidisciplinar e Áreas Especiais.',
-      specificAreas: [
-        'Multidisciplinar', 'Ensino', 'Secretariado Executivo', 'Defesa', 
-        'Bioética', 'Ciências Ambientais', 'Divulgação Científica', 
-        'Microeletrônica', 'Robótica, Mecatrônica e Automação', 
-        'Segurança Contra Incêndio'
-      ]
+      id: '9', name: 'Multidisciplinar', icon: LayoutGrid, theme: 'slate',
+      description: 'Ensino, Biotecnologia, Ciências Ambientais.',
+      specificAreas: ['Ensino', 'Biotecnologia', 'Ciências Ambientais', 'Interdisciplinar']
     }
   ];
 
-  // --- Módulos Estruturados (A-H + I) ---
+  // --- System Modules A-I ---
   const systemModules: SystemModule[] = [
     {
-      code: 'MÓDULO A',
-      title: 'Critérios CAPES & Docs',
+      code: 'MÓDULO A', title: 'Critérios CAPES & Docs',
       description: 'Motor de regras core, documentos de área e definições oficiais.',
-      icon: ShieldCheck,
-      status: 'active',
-      theme: 'cyan',
-      subModules: [
-        { id: 'A1', label: 'Repositório Oficial' },
-        { id: 'A2', label: 'Navegação por Temas' },
-        { id: 'A3', label: 'Motor de Regras (Engine)' },
-        { id: 'A4', label: 'Chat Contextual (RAG)' }
-      ]
+      icon: ShieldCheck, status: 'active', theme: 'cyan',
+      subModules: [{ id: 'A1', label: 'Repositório Oficial' }, { id: 'A2', label: 'Navegação Temas' }, { id: 'A3', label: 'Motor Regras' }, { id: 'A4', label: 'Chat RAG' }]
     },
     {
-      code: 'MÓDULO B',
-      title: 'Revistas Nacionais (Qualis)',
-      description: 'Ecossistema brasileiro. Foco em periódicos locais, SciELO e avaliação Capes.',
-      icon: BookCopy,
-      status: 'active',
-      theme: 'emerald',
-      subModules: [
-        { id: 'B1', label: 'Consulta Qualis Unificado' },
-        { id: 'B2', label: 'Indexação SciELO/Redalyc' },
-        { id: 'B3', label: 'Adequação Regional' }
-      ]
+      code: 'MÓDULO B', title: 'Revistas Nacionais (Qualis)',
+      description: 'Ecossistema brasileiro. Foco em periódicos locais e SciELO.',
+      icon: BookCopy, status: 'active', theme: 'emerald',
+      subModules: [{ id: 'B1', label: 'Consulta Qualis' }, { id: 'B2', label: 'Indexação SciELO' }, { id: 'B3', label: 'Adequação' }]
     },
     {
-      code: 'MÓDULO C',
-      title: 'International Journals',
+      code: 'MÓDULO C', title: 'International Journals',
       description: 'Alcance global. Periódicos de alto fator de impacto (JCR/SJR).',
-      icon: Globe,
-      status: 'active',
-      theme: 'indigo',
-      subModules: [
-        { id: 'C1', label: 'Web of Science & Scopus' },
-        { id: 'C2', label: 'Predatory Check (Lista Negra)' },
-        { id: 'C3', label: 'High Impact Matcher' }
-      ]
+      icon: Globe, status: 'active', theme: 'indigo',
+      subModules: [{ id: 'C1', label: 'Web of Science' }, { id: 'C2', label: 'Predatory Check' }, { id: 'C3', label: 'High Impact' }]
     },
     {
-      code: 'MÓDULO D',
-      title: 'Indicadores e Métricas',
-      description: 'Hub de métricas normalizadas, CiteScore, Fator de Impacto e h-index.',
-      icon: BarChart3,
-      status: 'active',
-      theme: 'violet',
-      subModules: [
-        { id: 'D1', label: 'Análise de Citações' },
-        { id: 'D2', label: 'Rastreabilidade de Dados' },
-        { id: 'D3', label: 'Score Alumni' }
-      ]
+      code: 'MÓDULO D', title: 'Indicadores e Métricas',
+      description: 'Hub de métricas normalizadas, CiteScore e h-index.',
+      icon: BarChart3, status: 'active', theme: 'violet',
+      subModules: [{ id: 'D1', label: 'Análise Citações' }, { id: 'D2', label: 'Rastreabilidade' }, { id: 'D3', label: 'Score Alumni' }]
     },
     {
-      code: 'MÓDULO E',
-      title: 'Busca e Recomendação',
-      description: 'Ferramentas de decisão baseadas em IA para encontrar o "Perfect Fit".',
-      icon: Search,
-      status: 'active',
-      theme: 'amber',
-      subModules: [
-        { id: 'E1', label: 'Busca Semântica Avançada' },
-        { id: 'E2', label: 'Comparador Lado a Lado' },
-        { id: 'E3', label: 'Recomendador Inteligente' }
-      ]
+      code: 'MÓDULO E', title: 'Busca e Recomendação',
+      description: 'Decisão baseada em IA para encontrar o "Perfect Fit".',
+      icon: Search, status: 'active', theme: 'amber',
+      subModules: [{ id: 'E1', label: 'Busca Semântica' }, { id: 'E2', label: 'Comparador' }, { id: 'E3', label: 'Recomendador' }]
     },
     {
-      code: 'MÓDULO I',
-      title: 'Produção Técnica',
-      description: 'Avaliação de Produtos Tecnológicos: Patentes, Softwares, Processos e Impacto Social.',
-      icon: Cpu,
-      status: 'active',
-      theme: 'orange',
-      subModules: [
-        { id: 'I1', label: 'Classificação T1-T4' },
-        { id: 'I2', label: 'Critérios de Impacto' },
-        { id: 'I3', label: 'Catálogo de Produtos (21)' }
-      ]
-    },
-    {
-      code: 'MÓDULO F',
-      title: 'Perfis e Gestão (SaaS)',
-      description: 'Controle de acesso, planos institucionais e gestão de pesquisadores.',
-      icon: Users,
-      status: 'active',
-      theme: 'blue',
-      subModules: [
-        { id: 'F1', label: 'Planos & Níveis' },
-        { id: 'F2', label: 'Controle RBAC' },
-        { id: 'F3', label: 'Equipes de Pesquisa' }
-      ]
-    },
-    {
-      code: 'MÓDULO G',
-      title: 'Relatórios Executivos',
-      description: 'Geração automática de documentos, mapas de produção e radares.',
-      icon: FileText,
-      status: 'beta',
-      theme: 'rose',
-      subModules: [
-        { id: 'G1', label: 'Relatório "Guia da Área"' },
-        { id: 'G2', label: 'Radar de Oportunidades' },
-        { id: 'G3', label: 'Exportação CSV/XLSX' }
-      ]
-    },
-    {
-      code: 'MÓDULO H',
-      title: 'Administração do Sistema',
-      description: 'Backoffice para curadoria de dados e validação de regras.',
-      icon: Settings,
-      status: 'locked',
-      theme: 'slate',
-      subModules: [
-        { id: 'H1', label: 'Gestão de Documentos' },
-        { id: 'H2', label: 'Validação de Revistas' },
-        { id: 'H3', label: 'Editor de Regras UI' }
-      ]
+      code: 'MÓDULO I', title: 'Produção Técnica',
+      description: 'Avaliação de Produtos Tecnológicos: Patentes, Softwares e Impacto.',
+      icon: Cpu, status: 'active', theme: 'orange',
+      subModules: [{ id: 'I1', label: 'Classificação T1-T4' }, { id: 'I2', label: 'Critérios Impacto' }, { id: 'I3', label: 'Catálogo (21)' }]
     }
   ];
 
-  // Helper para classes de cores - Luminous Update
+  // Prism Luminescence Theme Logic
   const getThemeStyles = (theme: string) => {
     const styles: any = {
       cyan: {
-        card: "bg-gradient-to-br from-cyan-500/10 via-cyan-900/5 to-transparent border-cyan-500/20 hover:border-cyan-400/50 hover:shadow-[0_0_40px_-10px_rgba(34,211,238,0.3)]",
-        iconBox: "bg-cyan-400/20 text-cyan-200 border-cyan-400/30 shadow-[0_0_15px_rgba(34,211,238,0.3)]",
-        title: "text-transparent bg-clip-text bg-gradient-to-r from-cyan-100 to-cyan-400",
-        subModule: "bg-cyan-950/40 border-cyan-500/20 text-cyan-100 hover:bg-cyan-500/20 hover:border-cyan-400/50",
-        accent: "bg-cyan-400",
-        pill: "bg-cyan-500/10 text-cyan-300 border-cyan-500/20"
+        card: "bg-[#0c1a2d]/80 border-[#22d3ee]/30 hover:border-[#22d3ee]/80 hover:shadow-[0_0_50px_-10px_rgba(34,211,238,0.4)]",
+        iconBox: "bg-[#22d3ee]/20 text-[#22d3ee] border-[#22d3ee]/40 shadow-[0_0_20px_rgba(34,211,238,0.2)]",
+        title: "text-transparent bg-clip-text bg-gradient-to-r from-[#e0faff] to-[#22d3ee]",
+        subModule: "bg-[#22d3ee]/5 border-[#22d3ee]/20 text-cyan-50 hover:bg-[#22d3ee]/15 hover:border-[#22d3ee]/50",
+        accent: "bg-[#22d3ee]", pill: "bg-[#22d3ee]/10 text-[#22d3ee] border-[#22d3ee]/20"
       },
       emerald: {
-        card: "bg-gradient-to-br from-emerald-500/10 via-emerald-900/5 to-transparent border-emerald-500/20 hover:border-emerald-400/50 hover:shadow-[0_0_40px_-10px_rgba(52,211,153,0.3)]",
-        iconBox: "bg-emerald-400/20 text-emerald-200 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)]",
-        title: "text-transparent bg-clip-text bg-gradient-to-r from-emerald-100 to-emerald-400",
-        subModule: "bg-emerald-950/40 border-emerald-500/20 text-emerald-100 hover:bg-emerald-500/20 hover:border-emerald-400/50",
-        accent: "bg-emerald-400",
-        pill: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20"
+        card: "bg-[#0b201a]/80 border-[#34d399]/30 hover:border-[#34d399]/80 hover:shadow-[0_0_50px_-10px_rgba(52,211,153,0.4)]",
+        iconBox: "bg-[#34d399]/20 text-[#34d399] border-[#34d399]/40 shadow-[0_0_20px_rgba(52,211,153,0.2)]",
+        title: "text-transparent bg-clip-text bg-gradient-to-r from-[#e6fffa] to-[#34d399]",
+        subModule: "bg-[#34d399]/5 border-[#34d399]/20 text-emerald-50 hover:bg-[#34d399]/15 hover:border-[#34d399]/50",
+        accent: "bg-[#34d399]", pill: "bg-[#34d399]/10 text-[#34d399] border-[#34d399]/20"
       },
       indigo: {
-        card: "bg-gradient-to-br from-indigo-500/10 via-indigo-900/5 to-transparent border-indigo-500/20 hover:border-indigo-400/50 hover:shadow-[0_0_40px_-10px_rgba(129,140,248,0.3)]",
-        iconBox: "bg-indigo-400/20 text-indigo-200 border-indigo-400/30 shadow-[0_0_15px_rgba(129,140,248,0.3)]",
-        title: "text-transparent bg-clip-text bg-gradient-to-r from-indigo-100 to-indigo-400",
-        subModule: "bg-indigo-950/40 border-indigo-500/20 text-indigo-100 hover:bg-indigo-500/20 hover:border-indigo-400/50",
-        accent: "bg-indigo-400",
-        pill: "bg-indigo-500/10 text-indigo-300 border-indigo-500/20"
-      },
-      violet: {
-        card: "bg-gradient-to-br from-violet-500/10 via-violet-900/5 to-transparent border-violet-500/20 hover:border-violet-400/50 hover:shadow-[0_0_40px_-10px_rgba(167,139,250,0.3)]",
-        iconBox: "bg-violet-400/20 text-violet-200 border-violet-400/30 shadow-[0_0_15px_rgba(167,139,250,0.3)]",
-        title: "text-transparent bg-clip-text bg-gradient-to-r from-violet-100 to-violet-400",
-        subModule: "bg-violet-950/40 border-violet-500/20 text-violet-100 hover:bg-violet-500/20 hover:border-violet-400/50",
-        accent: "bg-violet-400",
-        pill: "bg-violet-500/10 text-violet-300 border-violet-500/20"
-      },
-      amber: {
-        card: "bg-gradient-to-br from-amber-500/10 via-amber-900/5 to-transparent border-amber-500/20 hover:border-amber-400/50 hover:shadow-[0_0_40px_-10px_rgba(251,191,36,0.3)]",
-        iconBox: "bg-amber-400/20 text-amber-200 border-amber-400/30 shadow-[0_0_15px_rgba(251,191,36,0.3)]",
-        title: "text-transparent bg-clip-text bg-gradient-to-r from-amber-100 to-amber-400",
-        subModule: "bg-amber-950/40 border-amber-500/20 text-amber-100 hover:bg-amber-500/20 hover:border-amber-400/50",
-        accent: "bg-amber-400",
-        pill: "bg-amber-500/10 text-amber-300 border-amber-500/20"
-      },
-      blue: {
-        card: "bg-gradient-to-br from-blue-500/10 via-blue-900/5 to-transparent border-blue-500/20 hover:border-blue-400/50 hover:shadow-[0_0_40px_-10px_rgba(96,165,250,0.3)]",
-        iconBox: "bg-blue-400/20 text-blue-200 border-blue-400/30 shadow-[0_0_15px_rgba(96,165,250,0.3)]",
-        title: "text-transparent bg-clip-text bg-gradient-to-r from-blue-100 to-blue-400",
-        subModule: "bg-blue-950/40 border-blue-500/20 text-blue-100 hover:bg-blue-500/20 hover:border-blue-400/50",
-        accent: "bg-blue-400",
-        pill: "bg-blue-500/10 text-blue-300 border-blue-500/20"
+        card: "bg-[#141228]/80 border-[#818cf8]/30 hover:border-[#818cf8]/80 hover:shadow-[0_0_50px_-10px_rgba(129,140,248,0.4)]",
+        iconBox: "bg-[#818cf8]/20 text-[#818cf8] border-[#818cf8]/40 shadow-[0_0_20px_rgba(129,140,248,0.2)]",
+        title: "text-transparent bg-clip-text bg-gradient-to-r from-[#eef2ff] to-[#818cf8]",
+        subModule: "bg-[#818cf8]/5 border-[#818cf8]/20 text-indigo-50 hover:bg-[#818cf8]/15 hover:border-[#818cf8]/50",
+        accent: "bg-[#818cf8]", pill: "bg-[#818cf8]/10 text-[#818cf8] border-[#818cf8]/20"
       },
       rose: {
-        card: "bg-gradient-to-br from-rose-500/10 via-rose-900/5 to-transparent border-rose-500/20 hover:border-rose-400/50 hover:shadow-[0_0_40px_-10px_rgba(251,113,133,0.3)]",
-        iconBox: "bg-rose-400/20 text-rose-200 border-rose-400/30 shadow-[0_0_15px_rgba(251,113,133,0.3)]",
-        title: "text-transparent bg-clip-text bg-gradient-to-r from-rose-100 to-rose-400",
-        subModule: "bg-rose-950/40 border-rose-500/20 text-rose-100 hover:bg-rose-500/20 hover:border-rose-400/50",
-        accent: "bg-rose-400",
-        pill: "bg-rose-500/10 text-rose-300 border-rose-500/20"
+        card: "bg-[#200e12]/80 border-[#fb7185]/30 hover:border-[#fb7185]/80 hover:shadow-[0_0_50px_-10px_rgba(251,113,133,0.4)]",
+        iconBox: "bg-[#fb7185]/20 text-[#fb7185] border-[#fb7185]/40 shadow-[0_0_20px_rgba(251,113,133,0.2)]",
+        title: "text-transparent bg-clip-text bg-gradient-to-r from-[#fff1f2] to-[#fb7185]",
+        subModule: "bg-[#fb7185]/5 border-[#fb7185]/20 text-rose-50 hover:bg-[#fb7185]/15 hover:border-[#fb7185]/50",
+        accent: "bg-[#fb7185]", pill: "bg-[#fb7185]/10 text-[#fb7185] border-[#fb7185]/20"
       },
       lime: {
-        card: "bg-gradient-to-br from-lime-500/10 via-lime-900/5 to-transparent border-lime-500/20 hover:border-lime-400/50 hover:shadow-[0_0_40px_-10px_rgba(163,230,53,0.3)]",
-        iconBox: "bg-lime-400/20 text-lime-200 border-lime-400/30 shadow-[0_0_15px_rgba(163,230,53,0.3)]",
-        title: "text-transparent bg-clip-text bg-gradient-to-r from-lime-100 to-lime-400",
-        subModule: "bg-lime-950/40 border-lime-500/20 text-lime-100 hover:bg-lime-500/20 hover:border-lime-400/50",
-        accent: "bg-lime-400",
-        pill: "bg-lime-500/10 text-lime-300 border-lime-500/20"
+        card: "bg-[#1a1c0d]/80 border-[#a3e635]/30 hover:border-[#a3e635]/80 hover:shadow-[0_0_50px_-10px_rgba(163,230,53,0.4)]",
+        iconBox: "bg-[#a3e635]/20 text-[#a3e635] border-[#a3e635]/40 shadow-[0_0_20px_rgba(163,230,53,0.2)]",
+        title: "text-transparent bg-clip-text bg-gradient-to-r from-[#f7fee7] to-[#a3e635]",
+        subModule: "bg-[#a3e635]/5 border-[#a3e635]/20 text-lime-50 hover:bg-[#a3e635]/15 hover:border-[#a3e635]/50",
+        accent: "bg-[#a3e635]", pill: "bg-[#a3e635]/10 text-[#a3e635] border-[#a3e635]/20"
+      },
+      amber: {
+        card: "bg-[#201910]/80 border-[#fbbf24]/30 hover:border-[#fbbf24]/80 hover:shadow-[0_0_50px_-10px_rgba(251,191,36,0.4)]",
+        iconBox: "bg-[#fbbf24]/20 text-[#fbbf24] border-[#fbbf24]/40 shadow-[0_0_20px_rgba(251,191,36,0.2)]",
+        title: "text-transparent bg-clip-text bg-gradient-to-r from-[#fffbeb] to-[#fbbf24]",
+        subModule: "bg-[#fbbf24]/5 border-[#fbbf24]/20 text-amber-50 hover:bg-[#fbbf24]/15 hover:border-[#fbbf24]/50",
+        accent: "bg-[#fbbf24]", pill: "bg-[#fbbf24]/10 text-[#fbbf24] border-[#fbbf24]/20"
       },
       orange: {
-        card: "bg-gradient-to-br from-orange-500/10 via-orange-900/5 to-transparent border-orange-500/20 hover:border-orange-400/50 hover:shadow-[0_0_40px_-10px_rgba(251,146,60,0.3)]",
-        iconBox: "bg-orange-400/20 text-orange-200 border-orange-400/30 shadow-[0_0_15px_rgba(251,146,60,0.3)]",
-        title: "text-transparent bg-clip-text bg-gradient-to-r from-orange-100 to-orange-400",
-        subModule: "bg-orange-950/40 border-orange-500/20 text-orange-100 hover:bg-orange-500/20 hover:border-orange-400/50",
-        accent: "bg-orange-400",
-        pill: "bg-orange-500/10 text-orange-300 border-orange-500/20"
+        card: "bg-[#25150c]/80 border-[#f97316]/30 hover:border-[#f97316]/80 hover:shadow-[0_0_50px_-10px_rgba(249,115,22,0.4)]",
+        iconBox: "bg-[#f97316]/20 text-[#f97316] border-[#f97316]/40 shadow-[0_0_20px_rgba(249,115,22,0.2)]",
+        title: "text-transparent bg-clip-text bg-gradient-to-r from-[#fff7ed] to-[#f97316]",
+        subModule: "bg-[#f97316]/5 border-[#f97316]/20 text-orange-50 hover:bg-[#f97316]/15 hover:border-[#f97316]/50",
+        accent: "bg-[#f97316]", pill: "bg-[#f97316]/10 text-[#f97316] border-[#f97316]/20"
       },
       fuchsia: {
-        card: "bg-gradient-to-br from-fuchsia-500/10 via-fuchsia-900/5 to-transparent border-fuchsia-500/20 hover:border-fuchsia-400/50 hover:shadow-[0_0_40px_-10px_rgba(232,121,249,0.3)]",
-        iconBox: "bg-fuchsia-400/20 text-fuchsia-200 border-fuchsia-400/30 shadow-[0_0_15px_rgba(232,121,249,0.3)]",
-        title: "text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-100 to-fuchsia-400",
-        subModule: "bg-fuchsia-950/40 border-fuchsia-500/20 text-fuchsia-100 hover:bg-fuchsia-500/20 hover:border-fuchsia-400/50",
-        accent: "bg-fuchsia-400",
-        pill: "bg-fuchsia-500/10 text-fuchsia-300 border-fuchsia-500/20"
+        card: "bg-[#200e1e]/80 border-[#e879f9]/30 hover:border-[#e879f9]/80 hover:shadow-[0_0_50px_-10px_rgba(232,121,249,0.4)]",
+        iconBox: "bg-[#e879f9]/20 text-[#e879f9] border-[#e879f9]/40 shadow-[0_0_20px_rgba(232,121,249,0.2)]",
+        title: "text-transparent bg-clip-text bg-gradient-to-r from-[#fdf4ff] to-[#e879f9]",
+        subModule: "bg-[#e879f9]/5 border-[#e879f9]/20 text-fuchsia-50 hover:bg-[#e879f9]/15 hover:border-[#e879f9]/50",
+        accent: "bg-[#e879f9]", pill: "bg-[#e879f9]/10 text-[#e879f9] border-[#e879f9]/20"
       },
       slate: {
-        card: "bg-gradient-to-br from-slate-500/10 via-slate-800/5 to-transparent border-slate-500/20 hover:border-slate-400/50 hover:shadow-[0_0_40px_-10px_rgba(148,163,184,0.3)]",
-        iconBox: "bg-slate-400/20 text-slate-200 border-slate-400/30 shadow-[0_0_15px_rgba(148,163,184,0.3)]",
-        title: "text-transparent bg-clip-text bg-gradient-to-r from-slate-200 to-slate-400",
-        subModule: "bg-slate-900/40 border-slate-500/20 text-slate-300 hover:bg-slate-500/20 hover:border-slate-400/50",
-        accent: "bg-slate-400",
-        pill: "bg-slate-500/10 text-slate-300 border-slate-500/20"
+        card: "bg-[#111827]/80 border-[#94a3b8]/30 hover:border-[#94a3b8]/80 hover:shadow-[0_0_50px_-10px_rgba(148,163,184,0.4)]",
+        iconBox: "bg-[#94a3b8]/20 text-[#94a3b8] border-[#94a3b8]/40 shadow-[0_0_20px_rgba(148,163,184,0.2)]",
+        title: "text-transparent bg-clip-text bg-gradient-to-r from-[#f8fafc] to-[#94a3b8]",
+        subModule: "bg-[#94a3b8]/5 border-[#94a3b8]/20 text-slate-100 hover:bg-[#94a3b8]/15 hover:border-[#94a3b8]/50",
+        accent: "bg-[#94a3b8]", pill: "bg-[#94a3b8]/10 text-[#94a3b8] border-[#94a3b8]/20"
+      },
+      violet: {
+        card: "bg-[#1a0c2e]/80 border-[#a78bfa]/30 hover:border-[#a78bfa]/80 hover:shadow-[0_0_50px_-10px_rgba(167,139,250,0.4)]",
+        iconBox: "bg-[#a78bfa]/20 text-[#a78bfa] border-[#a78bfa]/40 shadow-[0_0_20px_rgba(167,139,250,0.2)]",
+        title: "text-transparent bg-clip-text bg-gradient-to-r from-[#f5f3ff] to-[#a78bfa]",
+        subModule: "bg-[#a78bfa]/5 border-[#a78bfa]/20 text-violet-50 hover:bg-[#a78bfa]/15 hover:border-[#a78bfa]/50",
+        accent: "bg-[#a78bfa]", pill: "bg-[#a78bfa]/10 text-[#a78bfa] border-[#a78bfa]/20"
+      },
+      blue: {
+        card: "bg-[#0c1a2d]/80 border-[#3b82f6]/30 hover:border-[#3b82f6]/80 hover:shadow-[0_0_50px_-10px_rgba(59,130,246,0.4)]",
+        iconBox: "bg-[#3b82f6]/20 text-[#3b82f6] border-[#3b82f6]/40 shadow-[0_0_20px_rgba(59,130,246,0.2)]",
+        title: "text-transparent bg-clip-text bg-gradient-to-r from-[#eff6ff] to-[#3b82f6]",
+        subModule: "bg-[#3b82f6]/5 border-[#3b82f6]/20 text-blue-50 hover:bg-[#3b82f6]/15 hover:border-[#3b82f6]/50",
+        accent: "bg-[#3b82f6]", pill: "bg-[#3b82f6]/10 text-[#3b82f6] border-[#3b82f6]/20"
       }
     };
     return styles[theme] || styles['slate'];
   };
 
-  // --- Step 4: Technical Production Detail View (New Module I) ---
+  // Logic for Law Dashboard
+  const calculateLawQualis = () => {
+    if (simArticleMerit === 'no') return { grade: 'I', label: 'Insuficiente', color: 'bg-[#ef4444] shadow-[0_0_30px_rgba(239,68,68,0.4)]' };
+    switch (simJournalLevel) {
+      case '1': return { grade: 'MB', label: 'Muito Bom', color: 'bg-[#10b981]' };
+      case '2': return { grade: 'B', label: 'Bom', color: 'bg-[#84cc16]' };
+      case '3': return { grade: 'R', label: 'Regular', color: 'bg-[#f59e0b]' };
+      default: return { grade: 'I', label: 'Insuficiente', color: 'bg-[#ef4444]' };
+    }
+  };
+
+  const simResult = calculateLawQualis();
+
+  // Logic for Módulo I Simulator (Technical Production)
+  const calculateTechClassification = () => {
+    const avg = (scoreInnovation + scoreComplexity + scoreImpact + scoreApplicability) / 4;
+    
+    // Weighted logic: Innovation and Complexity carry more weight for T1
+    const weighted = (scoreInnovation * 1.5 + scoreComplexity * 1.2 + scoreImpact * 1.0 + scoreApplicability * 0.8) / 4.5;
+
+    if (weighted >= 4.2) return { level: 'T1', score: '200 pts', label: 'Referência Mundial', color: 'bg-amber-500 shadow-amber-500/50' };
+    if (weighted >= 3.5) return { level: 'T2', score: '150 pts', label: 'Alto Impacto', color: 'bg-slate-300 shadow-slate-300/50' };
+    if (weighted >= 2.8) return { level: 'T3', score: '100 pts', label: 'Inovação Local', color: 'bg-orange-600 shadow-orange-600/50' };
+    if (weighted >= 2.0) return { level: 'T4', score: '50 pts', label: 'Aplicação Técnica', color: 'bg-slate-700 shadow-slate-700/50' };
+    return { level: 'T5', score: '10 pts', label: 'Produção Comum', color: 'bg-slate-900 border border-white/10' };
+  };
+
+  const techResult = calculateTechClassification();
+
+  // --- VIEW 4: Module Details (Módulo I Interactive) ---
   if (activeModule === 'MÓDULO I') {
+    const themeStyles = getThemeStyles('orange');
     return (
-      <div className="animate-fade-in pb-20 w-full max-w-[1400px] mx-auto">
-        {/* Header */}
+      <div className="animate-fade-in pb-20 w-full max-w-[1400px] mx-auto text-slate-200">
         <div className="flex items-center gap-4 mb-10">
-          <button 
-            onClick={() => setActiveModule(null)}
-            className="p-3 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all border border-white/5 hover:border-white/20 group"
-          >
+          <button onClick={() => setActiveModule(null)} className="p-3 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all border border-white/5 hover:border-white/20 group">
             <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
           </button>
           <div>
             <div className="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-orange-400 mb-1">
-              <span>Módulo I</span>
-              <ChevronRight className="w-3 h-3" />
-              <span>Avaliação CAPES</span>
+              <span>Módulo I</span><ChevronRight className="w-3 h-3" /><span>Produção Técnica</span>
             </div>
-            <h2 className="text-3xl font-bold text-white font-heading">Produção Técnica e Tecnológica</h2>
+            <h2 className="text-3xl font-bold text-white font-heading">Simulador de Estratificação Tecnológica</h2>
           </div>
         </div>
 
-        {/* Intro Card */}
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-orange-500/10 via-orange-900/5 to-transparent border border-orange-500/20 p-10 mb-12">
-           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-500/10 rounded-full blur-[100px] -mr-32 -mt-32 pointer-events-none"></div>
-           <div className="relative z-10 flex flex-col md:flex-row gap-8 items-start">
-              <div className="w-16 h-16 rounded-2xl bg-orange-500/20 flex items-center justify-center border border-orange-500/30 shadow-[0_0_20px_rgba(249,115,22,0.3)] shrink-0">
-                 <Cpu className="w-8 h-8 text-orange-200" />
-              </div>
-              <div>
-                 <h3 className="text-2xl font-bold text-white mb-3">Da Bancada para a Sociedade</h3>
-                 <p className="text-slate-300 leading-relaxed max-w-4xl text-lg">
-                    A Produção Tecnológica é considerada um <strong className="text-orange-200">"objeto tangível"</strong> com elevado grau de novidade, fruto da aplicação de novos conhecimentos científicos. 
-                    Diferencia-se da Produção Técnica (adaptação) por seu ineditismo e capacidade de solucionar problemas reais de empresas ou da sociedade.
-                 </p>
-              </div>
-           </div>
-        </div>
-
-        {/* The 4 Criteria */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-           {[
-             { title: "Impacto", icon: Target, desc: "Mudanças causadas no ambiente social e econômico.", color: "text-rose-300", bg: "bg-rose-500/10", border: "border-rose-500/20" },
-             { title: "Aplicabilidade", icon: Share2, desc: "Facilidade de emprego e replicabilidade em diferentes contextos.", color: "text-emerald-300", bg: "bg-emerald-500/10", border: "border-emerald-500/20" },
-             { title: "Inovação", icon: Sparkles, desc: "Intensidade de conhecimento inédito. Adaptação vs. Criação.", color: "text-amber-300", bg: "bg-amber-500/10", border: "border-amber-500/20" },
-             { title: "Complexidade", icon: GitBranch, desc: "Interação entre múltiplos atores e conhecimentos diversos.", color: "text-blue-300", bg: "bg-blue-500/10", border: "border-blue-500/20" },
-           ].map((c, i) => (
-             <div key={i} className={`p-6 rounded-[2rem] ${c.bg} border ${c.border} hover:scale-105 transition-transform duration-300`}>
-                <c.icon className={`w-8 h-8 ${c.color} mb-4`} />
-                <h4 className="text-lg font-bold text-white mb-2">{c.title}</h4>
-                <p className="text-sm text-slate-300 leading-snug">{c.desc}</p>
-             </div>
-           ))}
-        </div>
-
-        {/* Stratification Ladder (T1 - T5) */}
-        <div className="mb-16">
-           <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <Layers className="w-5 h-5 text-orange-400" />
-              Estratificação da Produção
-           </h3>
-           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-              {[
-                { level: "T1", score: "200 pts", desc: "Alta Inovação & Complexidade", color: "from-amber-300 to-yellow-500", text: "text-slate-900" },
-                { level: "T2", score: "150 pts", desc: "Média Inovação", color: "from-slate-300 to-slate-400", text: "text-slate-900" },
-                { level: "T3", score: "100 pts", desc: "Baixa Inovação / Adaptação", color: "from-orange-700 to-orange-800", text: "text-orange-100" },
-                { level: "T4", score: "50 pts", desc: "Serviço Técnico Especializado", color: "from-slate-700 to-slate-800", text: "text-slate-300" },
-                { level: "T5", score: "10 pts", desc: "Produção Técnica Comum", color: "from-slate-800 to-slate-900", text: "text-slate-500" },
-              ].map((t, i) => (
-                <div key={i} className="relative group overflow-hidden rounded-2xl border border-white/5">
-                   <div className={`absolute inset-0 bg-gradient-to-b ${t.color} opacity-20 group-hover:opacity-30 transition-opacity`}></div>
-                   <div className="relative p-6 flex flex-col h-full justify-between backdrop-blur-sm">
-                      <div className="flex justify-between items-start mb-4">
-                         <span className={`text-2xl font-black ${i === 0 ? 'text-amber-400' : 'text-white'}`}>{t.level}</span>
-                         <span className="text-[10px] font-mono font-bold bg-black/30 px-2 py-1 rounded text-white">{t.score}</span>
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+           {/* Controls Section */}
+           <div className="xl:col-span-8 space-y-8">
+              <div className={`relative overflow-hidden rounded-[2.5rem] ${themeStyles.card} p-10 shadow-2xl`}>
+                <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-orange-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="relative z-10">
+                   <div className="flex items-center gap-4 mb-8">
+                      <div className={`${themeStyles.iconBox} w-14 h-14 rounded-2xl flex items-center justify-center shrink-0`}>
+                        <Cpu className="w-7 h-7" />
                       </div>
-                      <p className="text-xs font-medium text-slate-300 uppercase tracking-wide">{t.desc}</p>
+                      <div>
+                        <h3 className="text-2xl font-bold text-white font-heading">Calibração de Ativos</h3>
+                        <p className="text-slate-400 text-sm font-medium">Ajuste os eixos de impacto para estimar a nota CAPES do produto.</p>
+                      </div>
+                   </div>
+
+                   <div className="space-y-10">
+                      {/* Category Selection */}
+                      <div>
+                         <label className="text-[10px] font-black text-orange-400 uppercase tracking-widest mb-4 block">Tipo de Produto</label>
+                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            {['Patente', 'Software', 'Tec. Social', 'Relatório', 'Material Didático', 'Manual', 'Curso', 'Protocolo'].map(cat => (
+                               <button 
+                                 key={cat} 
+                                 onClick={() => setTechCategory(cat)}
+                                 className={`py-3 px-4 rounded-xl text-[11px] font-bold border transition-all ${techCategory === cat ? 'bg-orange-500 border-orange-400 text-white shadow-lg shadow-orange-500/20' : 'bg-white/5 border-white/10 text-slate-400 hover:border-orange-500/30'}`}
+                               >
+                                 {cat}
+                               </button>
+                            ))}
+                         </div>
+                      </div>
+
+                      {/* Criterion Sliders */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                         {[
+                           { id: 'inv', label: 'Inovação & Ineditismo', value: scoreInnovation, set: setScoreInnovation, icon: Lightbulb, color: 'text-amber-400' },
+                           { id: 'com', label: 'Complexidade Técnica', value: scoreComplexity, set: setScoreComplexity, icon: GitBranch, color: 'text-blue-400' },
+                           { id: 'imp', label: 'Impacto Socioeconômico', value: scoreImpact, set: setScoreImpact, icon: Target, color: 'text-rose-400' },
+                           { id: 'apl', label: 'Escalabilidade & Uso', value: scoreApplicability, set: setScoreApplicability, icon: Share2, color: 'text-emerald-400' }
+                         ].map(axis => (
+                           <div key={axis.id} className="bg-white/5 p-6 rounded-[2rem] border border-white/5 group hover:border-white/10 transition-all">
+                              <div className="flex justify-between items-center mb-6">
+                                 <div className="flex items-center gap-3">
+                                    <axis.icon className={`w-5 h-5 ${axis.color}`} />
+                                    <span className="text-sm font-bold text-slate-200">{axis.label}</span>
+                                 </div>
+                                 <span className="text-xl font-black text-white">{axis.value}</span>
+                              </div>
+                              <input 
+                                type="range" min="1" max="5" step="1"
+                                value={axis.value}
+                                onChange={(e) => axis.set(parseInt(e.target.value))}
+                                className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-orange-500"
+                              />
+                              <div className="flex justify-between mt-3 text-[9px] font-black text-slate-500 uppercase tracking-widest">
+                                 <span>Adaptado</span>
+                                 <span>Inédito</span>
+                              </div>
+                           </div>
+                         ))}
+                      </div>
                    </div>
                 </div>
-              ))}
-           </div>
-        </div>
+              </div>
 
-        {/* The 21 Product Categories */}
-        <div>
-           <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <Box className="w-5 h-5 text-orange-400" />
-              Catálogo de Produtos (GT Produção Técnica)
-           </h3>
-           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {[
-                "Produto Bibliográfico", "Ativos de Propriedade Intelectual (Patentes)", "Tecnologia Social", 
-                "Curso de Formação Profissional", "Produto de Editoração", "Material Didático", 
-                "Software / Aplicativo", "Evento Organizado", "Norma ou Marco Regulatório", 
-                "Relatório Técnico Conclusivo", "Manual / Protocolo", "Tradução", 
-                "Acervo", "Base de Dados Técnico-Científica", "Cultivar", 
-                "Produto de Comunicação", "Carta, Mapa ou Similar", "Produtos/Processos em Sigilo", 
-                "Taxonomias, Ontologias e Tesauros", "Empresa ou Org. Social Inovadora", "Processo/Tecnologia Não Patenteável"
-              ].map((item, idx) => (
-                <div key={idx} className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-orange-500/30 hover:bg-orange-500/5 transition-all cursor-default group">
-                   <div className="w-1.5 h-1.5 rounded-full bg-orange-500/30 group-hover:bg-orange-400 transition-colors"></div>
-                   <span className="text-sm text-slate-300 font-medium group-hover:text-white">{item}</span>
-                </div>
-              ))}
+              {/* Guide/Info Section */}
+              <div className="bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-8">
+                 <h4 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-3">
+                    <Info className="w-5 h-5 text-orange-400" /> Referências de Classificação
+                 </h4>
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                       <p className="text-xs text-slate-400 leading-relaxed"><strong className="text-white">T1 (Excelência):</strong> Produto com patente internacional concedida ou software com uso em larga escala nacional comprovado.</p>
+                       <p className="text-xs text-slate-400 leading-relaxed"><strong className="text-white">T2 (Alta Qualidade):</strong> Patente nacional depositada ou tecnologia social com metodologia replicada por terceiros.</p>
+                    </div>
+                    <div className="space-y-4">
+                       <p className="text-xs text-slate-400 leading-relaxed"><strong className="text-white">T3 (Inovação Incremental):</strong> Relatórios técnicos conclusivos com aprovação de órgãos reguladores ou softwares de uso específico.</p>
+                       <p className="text-xs text-slate-400 leading-relaxed"><strong className="text-white">T4 (Técnica):</strong> Material didático instrucional ou manuais operacionais com validação acadêmica básica.</p>
+                    </div>
+                 </div>
+              </div>
+           </div>
+
+           {/* Results Section */}
+           <div className="xl:col-span-4">
+              <div className="sticky top-24 space-y-8">
+                 {/* Main Result Card */}
+                 <div className="bg-gradient-to-b from-[#1e1a10] to-[#0a0f1e] border-2 border-orange-500/40 rounded-[3rem] p-12 shadow-[0_0_60px_-10px_rgba(249,115,22,0.3)] text-center relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-40 h-40 bg-orange-500/20 rounded-full blur-[60px] -mr-15 -mt-15"></div>
+                    <div className="relative z-10">
+                       <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-8">Estratificação Estimada</p>
+                       
+                       <div className="relative inline-block mb-8">
+                          <div className={`w-32 h-32 rounded-full ${techResult.color} flex items-center justify-center text-white transition-all duration-700 shadow-2xl`}>
+                             <span className="text-5xl font-black drop-shadow-xl">{techResult.level}</span>
+                          </div>
+                          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-black/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 shadow-xl">
+                             <span className="text-xs font-black text-white whitespace-nowrap">{techResult.score}</span>
+                          </div>
+                       </div>
+
+                       <h3 className="text-2xl font-bold text-white mb-3 font-heading tracking-tight">{techResult.label}</h3>
+                       <p className="text-sm text-slate-400 font-medium mb-10 max-w-[200px] mx-auto leading-relaxed">Produto classificado como <strong className="text-orange-400">{techCategory}</strong> de alto valor agregado.</p>
+
+                       <div className="space-y-3">
+                          <div className="flex justify-between items-center text-[10px] font-black text-slate-500 uppercase tracking-widest bg-white/5 p-4 rounded-xl border border-white/5">
+                             <span>Inovação</span>
+                             <div className="flex gap-1">
+                                {[1,2,3,4,5].map(i => <div key={i} className={`w-1.5 h-1.5 rounded-full ${i <= scoreInnovation ? 'bg-orange-400 shadow-[0_0_8px_rgba(249,115,22,0.8)]' : 'bg-white/10'}`}></div>)}
+                             </div>
+                          </div>
+                          <div className="flex justify-between items-center text-[10px] font-black text-slate-500 uppercase tracking-widest bg-white/5 p-4 rounded-xl border border-white/5">
+                             <span>Impacto</span>
+                             <div className="flex gap-1">
+                                {[1,2,3,4,5].map(i => <div key={i} className={`w-1.5 h-1.5 rounded-full ${i <= scoreImpact ? 'bg-orange-400 shadow-[0_0_8px_rgba(249,115,22,0.8)]' : 'bg-white/10'}`}></div>)}
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+
+                 {/* Action Card */}
+                 <div className="bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-8 text-center backdrop-blur-xl">
+                    <h4 className="text-sm font-bold text-white mb-4">Exportar Memorial Descritivo</h4>
+                    <p className="text-xs text-slate-500 mb-8 leading-relaxed">Gere automaticamente a documentação de impacto para o Coleta CAPES com base nestes critérios.</p>
+                    <button className="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-[10px] font-black text-white uppercase tracking-widest transition-all flex items-center justify-center gap-3">
+                       <FileText className="w-4 h-4 text-orange-400" /> Baixar PDF Estruturado
+                    </button>
+                 </div>
+              </div>
            </div>
         </div>
       </div>
     );
   }
 
-  // --- Step 3: Modules View (Final Dashboard) ---
-  if (selectedMajorArea && selectedSpecificArea) {
+  // --- VIEW 3: Specific Area Dashboard (Modules Grid) ---
+  if (selectedMajorArea && selectedSpecificArea && selectedSpecificArea !== 'Direito') {
     const activeTheme = getThemeStyles(selectedMajorArea.theme);
-
     return (
-      <div className="animate-fade-in pb-12 w-full">
-        {/* Top Bar Navigation */}
-        <div className={`flex flex-col md:flex-row items-start md:items-center justify-between mb-10 bg-white/[0.02] backdrop-blur-2xl p-6 rounded-[2rem] border border-white/5 sticky top-4 z-30 shadow-2xl relative overflow-hidden`}>
-          {/* Subtle colored glow in header */}
+      <div className="animate-fade-in pb-12 w-full max-w-[1400px] mx-auto">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 bg-white/[0.02] backdrop-blur-2xl p-6 rounded-[2.5rem] border border-white/5 sticky top-4 z-30 shadow-2xl relative overflow-hidden">
           <div className={`absolute top-0 right-0 w-96 h-full bg-gradient-to-l from-${selectedMajorArea.theme}-500/10 to-transparent opacity-50 pointer-events-none`}></div>
-
-          <div className="flex items-center gap-4 md:gap-6 flex-wrap relative z-10">
-             <button 
-                onClick={() => setSelectedSpecificArea(null)}
-                className="p-3 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all border border-white/5 hover:border-white/20 group backdrop-blur-md"
-                title="Voltar"
-             >
-                <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-             </button>
-             <div className="hidden md:block h-10 w-px bg-white/10"></div>
-             
-             {/* Breadcrumbs / Title */}
-             <div className="flex flex-col">
-                <div className="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-slate-500">
-                    <span className="opacity-70">{selectedMajorArea.name}</span>
-                    <ChevronRight className="w-3 h-3 opacity-50" />
-                    <span className={`text-${selectedMajorArea.theme}-300`}>{selectedSpecificArea}</span>
-                </div>
-                <h2 className="text-3xl font-bold text-white font-heading tracking-tight mt-1 drop-shadow-md">{selectedSpecificArea}</h2>
+          <div className="flex items-center gap-6 relative z-10">
+             <button onClick={() => setSelectedSpecificArea(null)} className="p-3 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all border border-white/5 hover:border-white/20 group backdrop-blur-md"><ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" /></button>
+             <div>
+                <div className="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-slate-500"><span>{selectedMajorArea.name}</span><ChevronRight className="w-3 h-3 opacity-50" /><span className={activeTheme.title.replace('text-transparent bg-clip-text', '')}>{selectedSpecificArea}</span></div>
+                <h2 className="text-3xl font-bold text-white font-heading tracking-tight mt-1">{selectedSpecificArea}</h2>
              </div>
           </div>
-          
           <div className="hidden xl:flex items-center gap-4 relative z-10">
              <span className={`flex items-center gap-2 px-4 py-2 rounded-full ${activeTheme.pill} text-[10px] font-mono font-bold tracking-wider uppercase shadow-lg backdrop-blur-md`}>
                 <div className={`w-1.5 h-1.5 rounded-full ${activeTheme.accent} animate-pulse`}></div>
-                Critérios Atualizados
+                Critérios Ciclo 2025-2028
              </span>
           </div>
         </div>
 
-        {/* Modules Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8">
           {systemModules.map((module) => {
              const isLocked = module.status === 'locked';
              const Icon = module.icon;
              const themeStyles = getThemeStyles(module.theme);
-
              return (
-                <div 
-                   key={module.code}
-                   onClick={() => !isLocked && module.code === 'MÓDULO I' ? setActiveModule('MÓDULO I') : null}
-                   className={`
-                      group relative overflow-hidden rounded-[2.5rem] border backdrop-blur-xl
-                      transition-all duration-700 ease-out hover:-translate-y-2
-                      flex flex-col h-full
-                      ${isLocked ? 'opacity-50 grayscale cursor-not-allowed bg-white/[0.01] border-white/5' : `${themeStyles.card} cursor-pointer`}
-                   `}
-                >
-                   {/* Glass Shine Effect */}
-                   {!isLocked && <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>}
-
-                   {/* Module Header */}
+                <div key={module.code} onClick={() => !isLocked && (module.code === 'MÓDULO I' ? setActiveModule('MÓDULO I') : null)} className={`group relative overflow-hidden rounded-[2.5rem] border backdrop-blur-xl transition-all duration-700 ease-out hover:-translate-y-2 flex flex-col h-full ${isLocked ? 'opacity-50 grayscale cursor-not-allowed bg-white/[0.01] border-white/5' : `${themeStyles.card} cursor-pointer`}`}>
                    <div className="p-8 pb-4 relative z-10">
                       <div className="flex justify-between items-start mb-8">
-                         {/* Glowing Icon Container */}
-                         <div className={`w-16 h-16 rounded-2xl flex items-center justify-center backdrop-blur-md transition-all duration-500 group-hover:scale-110 ${isLocked ? 'bg-white/5 text-slate-500 border border-white/5' : themeStyles.iconBox}`}>
-                            <Icon className="w-8 h-8" strokeWidth={1.5} />
-                         </div>
-                         
-                         {/* Badge */}
-                         <div className="flex flex-col items-end gap-2">
-                             <span className={`px-3 py-1 rounded-lg text-[10px] font-mono font-bold tracking-widest border shadow-sm backdrop-blur-md ${isLocked ? 'border-white/10 text-slate-500' : themeStyles.pill}`}>
-                                {module.code}
-                             </span>
-                             {module.status === 'beta' && <span className="text-[9px] font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 shadow-[0_0_10px_rgba(251,191,36,0.2)]">BETA</span>}
-                         </div>
+                         <div className={`w-16 h-16 rounded-2xl flex items-center justify-center backdrop-blur-md transition-all duration-500 group-hover:scale-110 ${isLocked ? 'bg-white/5 text-slate-500 border border-white/5' : themeStyles.iconBox}`}><Icon className="w-8 h-8" strokeWidth={1.5} /></div>
+                         <span className={`px-3 py-1 rounded-lg text-[10px] font-mono font-bold tracking-widest border shadow-sm backdrop-blur-md ${isLocked ? 'border-white/10 text-slate-500' : themeStyles.pill}`}>{module.code}</span>
                       </div>
-
-                      <h3 className={`text-2xl font-bold mb-3 font-heading tracking-tight ${isLocked ? 'text-slate-500' : themeStyles.title}`}>
-                         {module.title}
-                      </h3>
-                      <p className="text-sm text-slate-300/80 leading-relaxed font-medium">
-                         {module.description}
-                      </p>
+                      <h3 className={`text-2xl font-bold mb-3 font-heading tracking-tight ${isLocked ? 'text-slate-500' : themeStyles.title}`}>{module.title}</h3>
+                      <p className="text-sm text-slate-300/80 leading-relaxed font-medium">{module.description}</p>
                    </div>
-
-                   {/* Sub-Modules Grid (Glass Chips) */}
-                   <div className="p-8 pt-4 flex-1 flex flex-col justify-end">
-                      <div className={`w-full h-px mb-6 ${isLocked ? 'bg-white/5' : `bg-gradient-to-r from-transparent via-${module.theme}-500/20 to-transparent`}`}></div>
-                      
-                      <div className="grid grid-cols-1 gap-3">
-                         {module.subModules.map((sub) => (
-                            <div key={sub.id} className={`flex items-center gap-4 p-3.5 rounded-xl border backdrop-blur-md transition-all duration-300 group/item shadow-sm ${isLocked ? 'bg-white/5 border-white/5' : themeStyles.subModule}`}>
-                               <span className={`
-                                  flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg
-                                  text-[10px] font-mono font-bold border
-                                  ${isLocked ? 'bg-slate-800 text-slate-600 border-slate-700' : 'bg-black/20 border-white/10 text-white/90 group-hover/item:bg-white/20'}
-                               `}>
-                                  {sub.id}
-                               </span>
-                               <span className={`text-xs font-bold tracking-wide transition-colors ${isLocked ? 'text-slate-600' : 'text-slate-200 group-hover/item:text-white'}`}>
-                                  {sub.label}
-                               </span>
-                            </div>
-                         ))}
-                      </div>
+                   <div className="p-8 pt-4 flex-1 flex flex-col justify-end space-y-3">
+                      {module.subModules.map((sub) => (
+                        <div key={sub.id} className={`flex items-center gap-4 p-3.5 rounded-xl border backdrop-blur-md transition-all duration-300 group/item shadow-sm ${isLocked ? 'bg-white/5 border-white/5' : themeStyles.subModule}`}>
+                           <span className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg text-[10px] font-mono font-bold border ${isLocked ? 'bg-slate-800 text-slate-600 border-slate-700' : 'bg-black/20 border-white/10 text-white/90 group-hover/item:bg-white/20'}`}>{sub.id}</span>
+                           <span className={`text-xs font-bold tracking-wide transition-colors ${isLocked ? 'text-slate-600' : 'text-slate-200 group-hover/item:text-white'}`}>{sub.label}</span>
+                        </div>
+                      ))}
                    </div>
-
-                   {/* Background Ambient Glow */}
-                   {!isLocked && (
-                      <div className={`absolute -bottom-20 -right-20 w-64 h-64 bg-${module.theme}-500/20 blur-[80px] rounded-full pointer-events-none group-hover:bg-${module.theme}-400/30 transition-colors duration-700`}></div>
-                   )}
                 </div>
              );
           })}
@@ -578,51 +458,75 @@ const AcademicIntelligence: React.FC = () => {
     );
   }
 
-  // --- Step 2: Specific Area Selection (Within Major Area) ---
-  if (selectedMajorArea) {
-    const themeStyles = getThemeStyles(selectedMajorArea.theme);
-
+  // --- VIEW 3 SPECIAL: Law (Direito) Specialized Dashboard ---
+  if (selectedSpecificArea === 'Direito') {
     return (
-      <div className="animate-fade-in max-w-[1200px] mx-auto min-h-[80vh] flex flex-col pt-8">
-        {/* Navigation & Header */}
-        <div className="flex flex-col items-center text-center mb-16 space-y-6 relative">
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-${selectedMajorArea.theme}-500/10 rounded-full blur-[120px] pointer-events-none`}></div>
+      <div className="animate-fade-in pb-12 w-full max-w-[1400px] mx-auto text-slate-200">
+        <div className="flex items-center gap-4 mb-8">
+          <button onClick={() => setSelectedSpecificArea(null)} className="p-3 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all border border-white/5 hover:border-white/20 group"><ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" /></button>
+          <div>
+            <div className="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-amber-400 mb-1"><span>Direito</span><ChevronRight className="w-3 h-3" /><span>Ciclo 2025-2028</span></div>
+            <h2 className="text-3xl font-bold text-white font-heading tracking-tight">Painel de Avaliação Jurídica</h2>
+          </div>
+        </div>
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-[#1a160d] border border-amber-500/30 p-10 mb-10 shadow-[0_0_60px_-15px_rgba(251,191,36,0.2)]">
+           <div className="relative z-10 flex flex-col lg:flex-row gap-10 items-center">
+              <div className="flex-1">
+                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-widest mb-4"><Scale className="w-3 h-3" /> Matriz Híbrida</div>
+                 <h1 className="text-4xl lg:text-5xl font-black text-white mb-4 font-heading leading-tight tracking-tight">Do Periódico para o <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fbefd0] to-[#fbbf24] drop-shadow-[0_0_10px_rgba(251,191,36,0.3)]">Artigo</span>.</h1>
+                 <p className="text-slate-300 text-lg leading-relaxed mb-6 font-medium max-w-2xl">A avaliação Jurídica agora prioriza a qualidade intrínseca. Nossa IA identifica mérito acadêmico real.</p>
+              </div>
+              <div className="w-full lg:w-1/3 bg-white/[0.03] border border-white/10 rounded-3xl p-8 backdrop-blur-xl relative group hover:border-amber-500/40 transition-all duration-500">
+                 <h3 className="text-sm font-bold text-amber-400 uppercase tracking-widest mb-4 flex items-center gap-2 font-heading"><Zap className="w-4 h-4" /> Regra de Ouro</h3>
+                 <p className="text-white font-semibold text-xl leading-snug">"Artigo <span className="text-red-400 font-black">sem mérito</span> científico será <span className="text-red-400 font-black">sempre</span> nota I."</p>
+              </div>
+           </div>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+           <div className="lg:col-span-8 space-y-8">
+              <div className="bg-[#0f172a]/40 border border-white/10 backdrop-blur-xl rounded-[2.5rem] p-8 shadow-2xl">
+                 <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3 font-heading tracking-tight"><Layers className="w-5 h-5 text-amber-500" /> Estratificação dos Veículos</h3>
+                 <div className="space-y-4">
+                    <div className="relative group overflow-hidden rounded-2xl border border-amber-500/20 bg-gradient-to-r from-amber-900/40 to-transparent p-6 hover:border-amber-500/60 transition-all duration-500 hover:shadow-[0_0_30px_rgba(251,191,36,0.1)]">
+                       <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-500 shadow-[0_0_15px_rgba(251,191,36,0.8)]"></div>
+                       <h4 className="text-lg font-bold text-white mb-1">Nível 1: Consolidado (MB)</h4><p className="text-sm text-slate-400">Excelência internacional. Scopus/WoS Q1-Q2.</p>
+                    </div>
+                 </div>
+              </div>
+           </div>
+           <div className="lg:col-span-4 space-y-8">
+              <div className="bg-gradient-to-b from-[#1e1a10] to-[#0a0f1e] border-2 border-amber-500/40 rounded-[2.5rem] p-10 shadow-[0_0_50px_-10px_rgba(251,191,36,0.3)] relative overflow-hidden group">
+                 <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3 font-heading tracking-tight relative z-10"><Gavel className="w-5 h-5 text-amber-400" /> Simulador de Qualis</h3>
+                 <div className="space-y-8 relative z-10 text-center">
+                    <div className={`inline-flex items-center justify-center w-28 h-28 rounded-full ${simResult.color} text-white transition-all duration-700`}><span className="text-4xl font-black">{simResult.grade}</span></div>
+                    <p className="text-white text-xl font-bold mt-6 tracking-tight font-heading">{simResult.label}</p>
+                 </div>
+              </div>
+           </div>
+        </div>
+      </div>
+    );
+  }
 
-            <button 
-                onClick={() => setSelectedMajorArea(null)}
-                className="relative z-10 mb-2 flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-5 py-2.5 rounded-full border border-white/10 backdrop-blur-md hover:scale-105 transform duration-200"
-            >
-                <ChevronLeft className="w-4 h-4" /> Voltar para Grandes Áreas
-            </button>
-
-            <div className={`relative z-10 w-24 h-24 rounded-[2rem] flex items-center justify-center backdrop-blur-xl mb-2 ${themeStyles.card} shadow-2xl`}>
-                <selectedMajorArea.icon className={`w-10 h-10 text-${selectedMajorArea.theme}-200`} />
-            </div>
-            
-            <div className="relative z-10">
-                <h2 className="text-4xl md:text-6xl font-black text-white font-heading tracking-tight mb-4 drop-shadow-xl">
-                    {selectedMajorArea.name}
-                </h2>
-                <p className="text-slate-300 text-lg font-medium max-w-2xl mx-auto leading-relaxed bg-black/20 p-4 rounded-2xl border border-white/5 backdrop-blur-sm inline-block">
-                    Selecione sua <span className={`text-${selectedMajorArea.theme}-300 font-bold border-b border-${selectedMajorArea.theme}-500/30`}>Área de Conhecimento</span> específica para calibrar os algoritmos.
-                </p>
+  // --- VIEW 2: Sub-area Selection ---
+  if (selectedMajorArea && !selectedSpecificArea) {
+    const themeStyles = getThemeStyles(selectedMajorArea.theme);
+    return (
+      <div className="animate-fade-in max-w-[1200px] mx-auto min-h-[80vh] flex flex-col pt-8 px-4">
+        <div className="flex flex-col items-center text-center mb-20 space-y-8 relative">
+            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-${selectedMajorArea.theme}-500/15 rounded-full blur-[150px] pointer-events-none`}></div>
+            <button onClick={() => setSelectedMajorArea(null)} className="relative z-10 flex items-center gap-3 text-xs font-black text-slate-400 hover:text-white transition-all bg-white/5 hover:bg-white/10 px-6 py-3 rounded-2xl border border-white/10 backdrop-blur-xl shadow-lg"><ChevronLeft className="w-5 h-5" /> Voltar</button>
+            <div className={`relative z-10 w-28 h-28 rounded-[2.5rem] flex items-center justify-center backdrop-blur-2xl mb-2 ${themeStyles.iconBox} shadow-2xl`}><selectedMajorArea.icon className="w-12 h-12" /></div>
+            <div className="relative z-10 space-y-4">
+                <h2 className="text-4xl md:text-7xl font-black text-white font-heading tracking-tighter drop-shadow-2xl">{selectedMajorArea.name}</h2>
+                <p className="text-slate-400 text-xl font-bold max-w-2xl mx-auto leading-relaxed bg-[#0f172a]/40 p-6 rounded-3xl border border-white/5 backdrop-blur-xl inline-block shadow-2xl">Selecione sua <span className={`${themeStyles.title} border-b-2 border-white/10`}>Área de Conhecimento</span> específica.</p>
             </div>
         </div>
-
-        {/* Specific Areas Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-20 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-20 relative z-10">
             {selectedMajorArea.specificAreas.map((area, index) => (
-                <button 
-                    key={index}
-                    onClick={() => setSelectedSpecificArea(area)}
-                    className={`group flex items-center justify-between p-6 rounded-2xl border backdrop-blur-md transition-all duration-300 text-left ${themeStyles.card} bg-white/[0.03]`}
-                >
-                    <span className="text-base font-bold text-slate-200 group-hover:text-white transition-colors tracking-wide">
-                        {area}
-                    </span>
-                    <div className={`p-2 rounded-full ${themeStyles.pill} opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-x-1 shadow-md`}>
-                        <ChevronRight className="w-4 h-4" />
-                    </div>
+                <button key={index} onClick={() => setSelectedSpecificArea(area)} className={`group flex items-center justify-between p-8 rounded-[2rem] border backdrop-blur-2xl transition-all duration-500 text-left ${themeStyles.card} hover:scale-105`}>
+                    <span className="text-lg font-black text-slate-200 group-hover:text-white transition-colors tracking-tight">{area}</span>
+                    <div className={`p-3 rounded-2xl ${themeStyles.pill} opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-x-2 shadow-xl`}><ChevronRight className="w-5 h-5" /></div>
                 </button>
             ))}
         </div>
@@ -630,55 +534,27 @@ const AcademicIntelligence: React.FC = () => {
     );
   }
 
-  // --- Step 1: Major Area Selection (Grid) ---
+  // --- VIEW 1: Major Area Selection Grid ---
   return (
-    <div className="animate-fade-in max-w-[1400px] mx-auto flex flex-col items-center justify-center min-h-[80vh]">
-      
+    <div className="animate-fade-in max-w-[1400px] mx-auto flex flex-col items-center justify-center min-h-[80vh] px-4">
       <div className="text-center mb-20 space-y-6 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-        
-        <div className="relative z-10 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-bold tracking-wide uppercase shadow-[0_0_20px_rgba(34,211,238,0.2)] backdrop-blur-md">
-            <Target className="w-3 h-3" />
-            Calibração de Contexto
-        </div>
-        
-        <h1 className="relative z-10 text-5xl md:text-7xl font-black text-white font-heading tracking-tight drop-shadow-2xl">
-            Selecione a <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-500">Grande Área</span>
-        </h1>
-        <p className="relative z-10 text-slate-300 text-xl max-w-3xl mx-auto leading-relaxed font-light">
-            O sistema irá carregar os <span className="text-white font-bold border-b border-cyan-500/30">Módulos de Inteligência (A-H)</span> com as regras específicas do CNPq.
-        </p>
+        <div className="relative z-10 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-[10px] font-black tracking-widest uppercase shadow-[0_0_30px_rgba(34,211,238,0.2)] backdrop-blur-md"><Target className="w-4 h-4" /> Calibração de Contexto</div>
+        <h1 className="relative z-10 text-5xl md:text-8xl font-black text-white font-heading tracking-tighter drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] leading-none">Selecione a <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-400">Grande Área</span></h1>
+        <p className="relative z-10 text-slate-400 text-xl max-w-3xl mx-auto leading-relaxed font-medium">Carregue os <span className="text-white border-b-2 border-cyan-500/30">Algoritmos de Área</span> com as diretrizes CAPES Ciclo 2025-2028.</p>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 w-full px-4 lg:px-12 pb-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-[1200px] pb-20">
         {areas.map((area) => {
           const themeStyles = getThemeStyles(area.theme);
           return (
-            <button
-                key={area.id}
-                onClick={() => setSelectedMajorArea(area)}
-                className={`group relative flex flex-col items-start p-8 rounded-[2.5rem] border backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 overflow-hidden text-left shadow-lg hover:shadow-2xl ${themeStyles.card}`}
-            >
+            <button key={area.id} onClick={() => setSelectedMajorArea(area)} className={`group relative flex flex-col items-start p-10 rounded-[2.5rem] border backdrop-blur-xl transition-all duration-700 hover:-translate-y-3 overflow-hidden text-left shadow-2xl ${themeStyles.card}`}>
                 <div className="relative z-10 w-full h-full flex flex-col">
-                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110 ${themeStyles.iconBox}`}>
-                        <area.icon className="w-8 h-8" strokeWidth={1.5} />
-                    </div>
-                    
-                    <h3 className={`text-2xl font-bold mb-3 font-heading tracking-tight group-hover:text-white transition-colors ${themeStyles.title.replace('text-transparent bg-clip-text', 'text-slate-200')}`}>
-                        {area.name}
-                    </h3>
-                    
-                    <p className="text-sm text-slate-400 font-medium leading-relaxed mb-8 group-hover:text-slate-300 transition-colors">
-                        {area.description}
-                    </p>
-                    
-                    <div className="mt-auto flex items-center justify-between w-full pt-6 border-t border-white/5 group-hover:border-white/10 transition-colors">
-                        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest group-hover:text-slate-400">
-                            {area.specificAreas.length} Subáreas
-                        </span>
-                        <div className={`p-2 rounded-full transition-all transform group-hover:translate-x-1 ${themeStyles.pill}`}>
-                            <ArrowRight className="w-4 h-4" />
-                        </div>
+                    <div className={`w-18 h-18 rounded-3xl flex items-center justify-center mb-8 transition-all duration-700 group-hover:scale-110 ${themeStyles.iconBox}`}><area.icon className="w-9 h-9" strokeWidth={1.5} /></div>
+                    <h3 className={`text-2xl font-black mb-3 font-heading tracking-tight ${themeStyles.title}`}>{area.name}</h3>
+                    <p className="text-sm text-slate-400 font-bold leading-relaxed mb-10">{area.description}</p>
+                    <div className="mt-auto flex items-center justify-between w-full pt-8 border-t border-white/5 transition-colors">
+                        <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest">{area.specificAreas.length} Subáreas</span>
+                        <div className={`p-3 rounded-2xl transition-all transform group-hover:translate-x-2 ${themeStyles.pill} shadow-lg`}><ArrowRight className="w-5 h-5" /></div>
                     </div>
                 </div>
             </button>

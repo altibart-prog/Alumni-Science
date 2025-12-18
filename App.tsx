@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   BookOpen, Users, FileText, MessageSquare, Search, Award, 
-  PenTool, FileSearch, Bot, FileCheck, FileEdit, Database, Home 
+  PenTool, FileSearch, Bot, FileCheck, FileEdit, Database, Home, Menu 
 } from 'lucide-react';
 import LandingPage from './components/LandingPage';
 import Sidebar from './components/Sidebar';
@@ -15,10 +15,9 @@ import { User, ViewState, MenuItem } from './types';
 export default function App() {
   const [currentView, setCurrentView] = useState<ViewState>('landing');
   const [user, setUser] = useState<User | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogin = (provider: string) => {
-    // Mock Login
     setUser({
       name: 'Pesquisador',
       email: 'pesquisador@universidade.edu.br',
@@ -34,7 +33,6 @@ export default function App() {
     setCurrentView('landing');
   };
 
-  // Helper to find current menu item details
   const getMenuDetails = (view: ViewState) => {
     const items: MenuItem[] = [
       { id: 'dashboard', label: 'Início', icon: Home, subtitle: 'Visão geral', view: 'dashboard' },
@@ -53,21 +51,18 @@ export default function App() {
     return items.find(i => i.view === view);
   };
 
-  // Se o usuário não estiver logado
   if (!user) {
     if (currentView === 'committee') {
       return <ScientificCommittee onBack={() => setCurrentView('landing')} />;
     }
-    // Landing Page agora aceita onNavigate
     return <LandingPage onLogin={handleLogin} onNavigate={setCurrentView} />;
   }
 
   const currentMenu = getMenuDetails(currentView);
 
   return (
-    <div className="min-h-screen flex font-sans text-slate-50 overflow-hidden relative">
-      {/* Global Grain Texture Overlay */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-[100]" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}></div>
+    <div className="min-h-screen flex bg-[#020617] text-slate-100 overflow-hidden relative">
+      <div className="fixed inset-0 pointer-events-none opacity-[0.05] z-[100]" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}></div>
 
       <Sidebar 
         sidebarOpen={sidebarOpen} 
@@ -78,31 +73,47 @@ export default function App() {
         onLogout={handleLogout}
       />
 
-      <main className={`flex-1 overflow-auto transition-all duration-300 relative z-10 ${sidebarOpen ? 'lg:ml-0' : 'lg:ml-0'}`}>
-        <div className="p-4 md:p-8 pt-20 lg:pt-8 min-h-full">
-          {currentView === 'dashboard' && (
-            <Dashboard setCurrentView={setCurrentView} userName={user.name} />
-          )}
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative z-10">
+        {/* Mobile Header */}
+        <header className="lg:hidden h-16 flex items-center px-4 border-b border-white/5 bg-[#020617]/80 backdrop-blur-xl shrink-0">
+           <button 
+             onClick={() => setSidebarOpen(true)}
+             className="p-2 rounded-xl bg-white/5 border border-white/10 text-white"
+           >
+             <Menu className="w-6 h-6" />
+           </button>
+           <div className="ml-4 flex items-baseline gap-1">
+              <span className="font-black text-lg text-white tracking-tighter">ALUMNI</span>
+              <span className="font-black text-lg text-amber-400 tracking-tighter">INDEX</span>
+           </div>
+        </header>
 
-          {currentView === 'review' && (
-            <ReviewPage />
-          )}
+        <main className="flex-1 overflow-auto transition-all duration-300">
+          <div className="p-4 md:p-8 min-h-full max-w-[1600px] mx-auto">
+            {currentView === 'dashboard' && (
+              <Dashboard setCurrentView={setCurrentView} userName={user.name} />
+            )}
 
-          {currentView === 'academic-intelligence' && (
-            <AcademicIntelligence />
-          )}
+            {currentView === 'review' && (
+              <ReviewPage />
+            )}
 
-          {currentView !== 'dashboard' && currentView !== 'review' && currentView !== 'academic-intelligence' && currentMenu && (
-            <PlaceholderView 
-              view={currentView}
-              icon={currentMenu.icon}
-              label={currentMenu.label}
-              subtitle={currentMenu.subtitle}
-              onBack={() => setCurrentView('dashboard')}
-            />
-          )}
-        </div>
-      </main>
+            {currentView === 'academic-intelligence' && (
+              <AcademicIntelligence />
+            )}
+
+            {currentView !== 'dashboard' && currentView !== 'review' && currentView !== 'academic-intelligence' && currentMenu && (
+              <PlaceholderView 
+                view={currentView}
+                icon={currentMenu.icon}
+                label={currentMenu.label}
+                subtitle={currentMenu.subtitle}
+                onBack={() => setCurrentView('dashboard')}
+              />
+            )}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

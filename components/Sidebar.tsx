@@ -122,10 +122,10 @@ const Sidebar: React.FC<SidebarProps> = ({
              </div>
 
              <div className={`flex flex-col transition-all duration-500 overflow-hidden whitespace-nowrap ${sidebarOpen ? 'opacity-100 max-w-[200px]' : 'opacity-0 max-w-0'}`}>
-                <span className="font-bold text-xl leading-none text-white font-heading tracking-tight">
-                  Alumni<span className="text-cyan-400">.ai</span>
+                <span className="font-black text-xl leading-none text-white font-heading tracking-tighter">
+                  ALUMNI<span className="text-cyan-400">INDEX</span>
                 </span>
-                <span className="text-[9px] text-slate-400 font-bold tracking-[0.2em] uppercase mt-1">Science Platform</span>
+                <span className="text-[9px] text-slate-400 font-bold tracking-[0.2em] uppercase mt-1">Sovereign Platform</span>
              </div>
           </div>
 
