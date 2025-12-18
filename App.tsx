@@ -1,9 +1,10 @@
+
 import React, { useState } from 'react';
 import { 
-  BookOpen, Users, FileText, MessageSquare, Search, Award, 
+  BookOpen, FileText, MessageSquare, Search, Award, 
   PenTool, FileSearch, Bot, FileCheck, FileEdit, Database, Home, Menu 
 } from 'lucide-react';
-import LandingPage, { GoldenEagleIcon } from './components/LandingPage';
+import LandingPage, { SovereignEagleLogo } from './components/LandingPage';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import ReviewPage from './components/ReviewPage';
@@ -19,9 +20,9 @@ export default function App() {
 
   const handleLogin = (provider: string) => {
     setUser({
-      name: 'Pesquisador',
-      email: 'pesquisador@universidade.edu.br',
-      institution: 'Universidade Federal',
+      name: 'Pesquisador Alumni',
+      email: 'pesquisador@alumniin.com',
+      institution: 'Universidade Alumni',
       tier: 'PRO',
       credits: 100
     });
@@ -74,7 +75,6 @@ export default function App() {
       />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative z-10">
-        {/* Mobile Header */}
         <header className="lg:hidden h-16 flex items-center px-4 border-b border-white/5 bg-[#020617]/80 backdrop-blur-xl shrink-0">
            <button 
              onClick={() => setSidebarOpen(true)}
@@ -83,10 +83,10 @@ export default function App() {
              <Menu className="w-6 h-6" />
            </button>
            <div className="ml-4 flex items-center gap-2">
-              <GoldenEagleIcon className="w-7 h-6" />
-              <div className="flex items-center">
-                <span className="font-black text-lg text-white tracking-tighter">ALUMNI</span>
-                <span className="font-black text-lg text-amber-400 tracking-tighter ml-1">INDEX</span>
+              <SovereignEagleLogo className="w-7 h-6" />
+              <div className="flex items-baseline gap-0.5">
+                <span className="font-black text-lg text-white tracking-tighter uppercase">Alumni</span>
+                <span className="font-black text-lg text-[#0da1a1] tracking-tighter lowercase">.in</span>
               </div>
            </div>
         </header>

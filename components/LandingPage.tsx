@@ -1,38 +1,32 @@
+
 import React from 'react';
 import { 
-  BookOpen, ChevronRight, Users, Network, 
-  Instagram, Linkedin, Youtube, Mail, 
-  MessageCircle, Globe, Sparkles, ArrowRight,
-  CheckCircle2, Cpu, ShieldCheck, Zap, Layers,
-  Trophy, GraduationCap, Microscope
+  Users, Globe, Sparkles, ArrowRight,
+  ShieldCheck, Zap, GraduationCap, Microscope,
+  Phone, Mail, MapPin, Instagram, Linkedin, Youtube, Facebook,
+  Search, ChevronRight, Trophy, BookOpen, CheckCircle2
 } from 'lucide-react';
 import { ViewState } from '../types';
 
-export const GoldenEagleIcon = ({ className = "w-12 h-10" }: { className?: string }) => (
-  <svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg" className={`${className} drop-shadow-[0_0_12px_rgba(212,175,55,0.4)]`}>
-    {/* Geometric Head */}
-    <path d="M50 8L55 13H45L50 8Z" fill="url(#goldGradient)"/>
+export const SovereignEagleLogo = ({ className = "w-12 h-10" }: { className?: string }) => (
+  <svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg" className={`${className} drop-shadow-[0_0_10px_rgba(13,161,161,0.4)]`}>
+    {/* Geometric Sovereign Eagle - Tech Style */}
+    <path d="M50 5L58 15H42L50 5Z" fill="url(#tealGradient)"/>
+    <path d="M10 35L40 15L50 28L60 15L90 35" stroke="url(#tealGradient)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M20 45L45 32L50 40L55 32L80 45" stroke="url(#tealGradient)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
     
-    {/* Upper Wing Layers - Precision Chevrons from reference */}
-    <path d="M12 40L36 16L50 30L64 16L88 40" stroke="url(#goldGradient)" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M22 44L40 26L50 36L60 26L78 44" stroke="url(#goldGradient)" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
+    {/* Central Knowledge Diamond */}
+    <path d="M45 55L50 62L55 55L50 48L45 55Z" fill="url(#tealGradient)"/>
     
-    {/* Central Barbell/Scale Element from reference image */}
-    <path d="M28 58H32V52H28V58Z" fill="url(#goldGradient)"/>
-    <path d="M36 55H64" stroke="url(#goldGradient)" strokeWidth="3.5" strokeLinecap="round"/>
-    <path d="M68 58H72V52H68V58Z" fill="url(#goldGradient)"/>
-    <path d="M35 52V58M65 52V58" stroke="url(#goldGradient)" strokeWidth="3" strokeLinecap="round"/>
-    
-    {/* X-Intersection and Lower Diamond Base */}
-    <path d="M38 42L50 54L62 42" stroke="url(#goldGradient)" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M42 64L50 72L58 64" stroke="url(#goldGradient)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M50 70L54 75L50 80L46 75L50 70Z" fill="url(#goldGradient)"/>
+    {/* Base Chevrons */}
+    <path d="M35 65L50 78L65 65" stroke="url(#tealGradient)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M42 72L50 80L58 72" stroke="url(#tealGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 
     <defs>
-      <linearGradient id="goldGradient" x1="12" y1="8" x2="88" y2="80" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#D4AF37" />
-        <stop offset="0.5" stopColor="#B8860B" />
-        <stop offset="1" stopColor="#8B6914" />
+      <linearGradient id="tealGradient" x1="10" y1="5" x2="90" y2="80" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#22d3ee" />
+        <stop offset="0.5" stopColor="#0da1a1" />
+        <stop offset="1" stopColor="#0b8a8a" />
       </linearGradient>
     </defs>
   </svg>
@@ -53,41 +47,58 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onNavigate }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans selection:bg-amber-500/30 overflow-x-hidden">
+    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-[#0da1a1]/30 overflow-x-hidden">
       
-      {/* --- Animated Ambient Background --- */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 -left-4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-amber-500/10 rounded-full mix-blend-screen filter blur-[100px] md:blur-[140px] animate-blob"></div>
-        <div className="absolute top-0 -right-4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-indigo-500/10 rounded-full mix-blend-screen filter blur-[100px] md:blur-[140px] animate-blob animation-delay-2000"></div>
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
+      {/* --- Alumni Top Bar --- */}
+      <div className="bg-[#0da1a1] text-white py-2 text-[10px] md:text-[11px] font-bold tracking-wide">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-2">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+            <span className="flex items-center gap-1.5"><Phone className="w-3 h-3" /> (11) 98179-5390</span>
+            <span className="flex items-center gap-1.5"><Mail className="w-3 h-3" /> publisher@alumniin.com</span>
+            <span className="flex items-center gap-1.5"><MapPin className="w-3 h-3" /> São Paulo | Brazil | Florida</span>
+          </div>
+          <div className="flex items-center gap-4 opacity-90">
+            <Instagram className="w-3.5 h-3.5 cursor-pointer hover:scale-110 transition-transform" />
+            <Linkedin className="w-3.5 h-3.5 cursor-pointer hover:scale-110 transition-transform" />
+            <Youtube className="w-3.5 h-3.5 cursor-pointer hover:scale-110 transition-transform" />
+            <Facebook className="w-3.5 h-3.5 cursor-pointer hover:scale-110 transition-transform" />
+            <div className="h-3 w-px bg-white/30 mx-1"></div>
+            <Search className="w-3.5 h-3.5 cursor-pointer hover:scale-110 transition-transform" />
+          </div>
+        </div>
       </div>
 
       {/* --- Navigation --- */}
-      <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#020617]/80 backdrop-blur-xl transition-all duration-300">
+      <nav className="sticky top-0 w-full z-50 border-b border-slate-100 bg-white/95 backdrop-blur-md transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+          <div className="flex justify-between items-center h-20 md:h-24">
             <div className="flex items-center gap-4 cursor-pointer group" onClick={() => onNavigate('landing')}>
-              <GoldenEagleIcon className="w-10 h-8 md:w-14 md:h-11 transition-transform group-hover:scale-110" />
-              <div className="flex items-center ml-2">
-                <span className="text-xl md:text-[28px] font-black tracking-[-0.03em] text-white font-heading leading-none">ALUMNI</span>
-                <span className="text-xl md:text-[28px] font-black tracking-[-0.03em] text-[#FBBF24] font-heading leading-none ml-1.5">INDEX</span>
+              <SovereignEagleLogo className="w-10 h-8 md:w-12 md:h-10" />
+              <div className="flex flex-col">
+                <div className="flex items-baseline gap-1">
+                  <span className="text-xl md:text-3xl font-black tracking-tighter text-slate-800 font-heading leading-none uppercase">Alumni</span>
+                  <span className="text-xl md:text-3xl font-black tracking-tighter text-[#0da1a1] font-heading leading-none lowercase">.in</span>
+                </div>
+                <span className="hidden xs:block text-[8px] md:text-[9px] tracking-[0.4em] text-slate-400 uppercase font-black mt-1 ml-0.5">Sovereign Index</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
-               <div className="hidden lg:flex items-center gap-1 bg-white/5 p-1 rounded-2xl border border-white/10 backdrop-blur-md">
-                 <button onClick={() => onNavigate('landing')} className="px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-white bg-white/10 shadow-sm transition-all border border-white/10">Home</button>
-                 <button onClick={() => onNavigate('committee')} className="px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-all">Comitê</button>
-                 <button className="px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-all">Instituições</button>
+            <div className="flex items-center gap-4 md:gap-8">
+               <div className="hidden lg:flex items-center gap-8">
+                 <button onClick={() => onNavigate('landing')} className="text-sm font-bold text-[#0da1a1]">Home</button>
+                 <button className="text-sm font-bold text-slate-500 hover:text-[#0da1a1] transition-colors">Sobre</button>
+                 <button className="text-sm font-bold text-slate-500 hover:text-[#0da1a1] transition-colors">Editoriais</button>
+                 <button className="text-sm font-bold text-slate-500 hover:text-[#0da1a1] transition-colors">Científicas</button>
+                 <button className="text-sm font-bold text-slate-500 hover:text-[#0da1a1] transition-colors">Contato</button>
                </div>
                
                <button 
                 onClick={() => onLogin('google')}
-                className="inline-flex h-10 md:h-12 items-center justify-center rounded-xl md:rounded-2xl bg-white px-4 md:px-8 font-black text-slate-950 transition-all hover:bg-amber-400 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(251,191,36,0.3)]"
+                className="inline-flex h-11 md:h-12 items-center justify-center rounded-xl bg-[#0da1a1] px-6 md:px-8 font-black text-white transition-all hover:bg-slate-900 active:scale-95 shadow-xl shadow-[#0da1a1]/20"
               >
-                <span className="text-[9px] md:text-[10px] uppercase tracking-widest flex items-center gap-2">
-                  <span className="hidden xs:inline">ACESSAR</span> PLATAFORMA
-                  <ArrowRight className="w-3 md:w-4 h-3 md:h-4" />
+                <span className="text-[10px] uppercase tracking-widest flex items-center gap-2">
+                  ACESSAR PLATAFORMA
+                  <ArrowRight className="w-4 h-4" />
                 </span>
               </button>
             </div>
@@ -95,75 +106,92 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onNavigate }) => {
         </div>
       </nav>
 
-      {/* --- Hero Section --- */}
-      <div className="relative pt-32 md:pt-48 pb-20 md:pb-32 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div className="space-y-8 text-center lg:text-left">
-              <div className="inline-flex items-center gap-3 px-4 md:px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 shadow-[0_0_30px_rgba(251,191,36,0.1)] animate-fade-in-up backdrop-blur-md mx-auto lg:mx-0">
-                <Trophy className="w-3 md:w-4 h-3 md:h-4" />
-                <span className="text-[9px] md:text-[10px] font-black tracking-[0.2em] uppercase font-heading">The Universal Gold Standard v2.5</span>
+      {/* --- Hero: Inovação e Transformação --- */}
+      <div className="relative min-h-[80vh] md:min-h-[90vh] flex items-center overflow-hidden bg-slate-950">
+        <div className="absolute inset-0 z-0 opacity-40">
+           <img 
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000" 
+            alt="Data Network" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-10">
+              <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-[#0da1a1]/10 border border-[#0da1a1]/30 text-[#0da1a1] backdrop-blur-md shadow-[0_0_30px_rgba(13,161,161,0.2)]">
+                <Sparkles className="w-4 h-4" />
+                <span className="text-[10px] font-black tracking-[0.3em] uppercase">NOSSA ESSÊNCIA</span>
               </div>
 
               <div className="space-y-6">
-                <h1 className="text-4xl sm:text-6xl lg:text-8xl font-black text-white leading-tight tracking-tighter font-heading">
-                  Sua Bússola <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-600">Soberana</span><br className="hidden sm:block" />
-                  <span className="text-2xl sm:text-4xl lg:text-5xl text-slate-400 font-bold opacity-80 uppercase tracking-tighter">no Universo Acadêmico Global.</span>
+                <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter font-heading">
+                  INOVAÇÃO E <br/>
+                  <span className="text-[#0da1a1]">TRANSFORMAÇÃO</span>
                 </h1>
-                <p className="text-lg md:text-xl text-slate-400 max-w-xl leading-relaxed font-medium mx-auto lg:mx-0">
-                  Inteligência artificial especializada em todas as áreas do conhecimento CAPES. Navegue pelo Ciclo 2025-2028 com precisão soberana.
+                <p className="text-lg md:text-xl text-slate-300 leading-relaxed font-medium max-w-xl">
+                  Acreditamos que a educação não tem período de existência, ela rompe o tempo, possibilidades, vai para além da geografia, o conhecimento transforma gerações e muda realidades sociais.
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <button 
                   onClick={() => onLogin('google')}
-                  className="px-8 md:px-12 py-5 md:py-6 bg-white text-slate-950 rounded-[1.5rem] md:rounded-[2rem] font-black text-xs md:text-sm transition-all hover:bg-amber-400 flex items-center justify-center gap-3 group shadow-2xl hover:-translate-y-1"
+                  className="px-10 py-5 bg-[#0da1a1] text-white rounded-2xl font-black text-xs md:text-sm transition-all hover:bg-white hover:text-[#0da1a1] flex items-center justify-center gap-3 group shadow-2xl hover:-translate-y-1"
                 >
-                  <Zap className="w-5 h-5 fill-slate-950" />
+                  <Zap className="w-5 h-5 fill-current" />
                   EXPERIMENTAR GRATUITAMENTE
                 </button>
                 <button 
                   onClick={() => onNavigate('committee')}
-                  className="px-8 md:px-12 py-5 md:py-6 bg-white/5 text-white border border-white/10 rounded-[1.5rem] md:rounded-[2rem] font-black text-xs md:text-sm transition-all hover:bg-white/10 flex items-center justify-center gap-3 backdrop-blur-xl"
+                  className="px-10 py-5 bg-white/5 text-white border border-white/10 rounded-2xl font-black text-xs md:text-sm transition-all hover:bg-white/10 flex items-center justify-center gap-3 backdrop-blur-xl"
                 >
-                  <ShieldCheck className="w-5 h-5 text-amber-400" />
-                  CONSULTAR CONSELHO
+                  <ShieldCheck className="w-5 h-5 text-[#0da1a1]" />
+                  CONSELHO CIENTÍFICO
                 </button>
               </div>
             </div>
 
-            {/* Visual Access Card */}
-            <div className="relative group max-w-lg mx-auto lg:max-w-none w-full">
-               <div className="absolute -inset-6 bg-gradient-to-br from-amber-500/10 to-transparent rounded-[4rem] blur-3xl opacity-50 group-hover:opacity-80 transition duration-1000"></div>
-               <div className="relative bg-[#0f172a]/60 backdrop-blur-3xl rounded-[2.5rem] md:rounded-[3.5rem] p-8 md:p-14 shadow-2xl border border-white/10 overflow-hidden">
-                  <div className="flex items-center gap-4 mb-8 md:mb-12">
-                     <div className="w-12 h-12 md:w-16 md:h-16 bg-amber-500/20 rounded-xl md:rounded-2xl flex items-center justify-center border border-amber-500/30">
-                        <Users className="w-6 md:w-8 h-6 md:h-8 text-amber-300" />
-                     </div>
-                     <div>
-                        <h3 className="text-xl md:text-3xl font-black text-white font-heading tracking-tight">Acesso Exclusivo</h3>
-                        <p className="text-slate-400 text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em]">PESQUISADORES & LABORATÓRIOS</p>
-                     </div>
-                  </div>
-
-                  <div className="space-y-4 md:space-y-6">
-                     <button onClick={() => onLogin('google')} className="w-full bg-white/5 hover:bg-white/10 text-white font-black h-16 md:h-20 rounded-xl md:rounded-[1.5rem] flex items-center justify-center gap-3 md:gap-5 border border-white/10 transition-all active:scale-95 group/btn">
-                        <img src="https://www.google.com/favicon.ico" alt="G" className="w-5 h-5 grayscale group-hover/btn:grayscale-0 transition-all" />
-                        <span className="text-xs md:text-sm">Entrar com Google Acadêmico</span>
-                     </button>
-                     
-                     <div className="relative py-4 md:py-6 flex items-center">
-                        <div className="flex-1 border-t border-white/5"></div>
-                        <span className="px-4 text-[9px] text-slate-500 uppercase tracking-widest font-black">OU E-MAIL INSTITUCIONAL</span>
-                        <div className="flex-1 border-t border-white/5"></div>
+            <div className="hidden lg:block relative">
+               <div className="absolute -inset-10 bg-[#0da1a1]/20 blur-[120px] rounded-full animate-pulse"></div>
+               <div className="relative bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[3rem] p-12 shadow-2xl overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-[#0da1a1]/20 rounded-full blur-[60px] -mr-10 -mt-10"></div>
+                  
+                  <div className="space-y-8 relative z-10">
+                     <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 bg-[#0da1a1]/10 rounded-2xl flex items-center justify-center border border-[#0da1a1]/30">
+                           <Microscope className="w-8 h-8 text-[#0da1a1]" />
+                        </div>
+                        <div>
+                           <h3 className="text-2xl font-bold text-white font-heading tracking-tight">AI Academic Core</h3>
+                           <p className="text-[#0da1a1] text-[10px] font-black uppercase tracking-widest">SOVEREIGN INTELLIGENCE</p>
+                        </div>
                      </div>
 
-                     <div className="space-y-3 md:space-y-4">
-                        <input type="email" placeholder="nome@universidade.edu.br" className="w-full bg-white/5 border border-white/10 rounded-xl md:rounded-[1.5rem] px-6 h-14 md:h-16 text-white font-bold placeholder:text-slate-600 focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 outline-none transition-all" />
-                        <button onClick={() => onLogin('email')} className="w-full bg-amber-600 hover:bg-amber-500 text-white h-14 md:h-16 rounded-xl md:rounded-[1.5rem] font-black text-xs md:text-sm uppercase tracking-widest transition-all shadow-[0_0_40px_rgba(251,191,36,0.2)]">
-                            SOLICITAR LINK SOBERANO
-                        </button>
+                     <div className="space-y-4">
+                        {[
+                          "Avaliação Qualis 2025-2028",
+                          "Análise de Impacto JCR/SJR",
+                          "Redação Neural Assistida",
+                          "Mapeamento de Lacunas Científicas"
+                        ].map((item, i) => (
+                          <div key={i} className="flex items-center gap-3 text-slate-300 font-bold text-sm">
+                             {/* Fix: Added missing CheckCircle2 import */}
+                             <CheckCircle2 className="w-4 h-4 text-[#0da1a1]" />
+                             {item}
+                          </div>
+                        ))}
+                     </div>
+
+                     <div className="pt-8 border-t border-white/5">
+                        <div className="flex justify-between items-center text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">
+                           <span>Processamento Neural</span>
+                           <span className="text-[#0da1a1]">98.2% Accuracy</span>
+                        </div>
+                        <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                           <div className="h-full w-[98%] bg-gradient-to-r from-[#0da1a1] to-cyan-400"></div>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -172,76 +200,92 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onNavigate }) => {
         </div>
       </div>
 
-      {/* Partners Section */}
-      <div className="bg-white/[0.02] border-y border-white/5 py-12 md:py-24 relative z-10 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-           <p className="text-[9px] md:text-[11px] font-black text-slate-500 uppercase tracking-[0.4em] md:tracking-[0.6em] mb-8 md:mb-16">CHANCELADO POR ECOSSISTEMAS DE ALTA PERFORMANCE</p>
-           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-24 opacity-30 grayscale hover:grayscale-0 transition-all duration-1000">
-              {partners.map((p, i) => (
-                <div key={i} className="flex flex-col items-center">
-                    <span className="text-2xl md:text-4xl font-black text-white font-heading">{p.name}</span>
-                    <span className="text-[8px] md:text-[10px] uppercase tracking-widest text-slate-500 font-black mt-1">{p.label}</span>
-                </div>
-              ))}
-           </div>
-        </div>
-      </div>
-
-      {/* Coverage Grid */}
-      <div className="py-20 md:py-40 relative z-10">
+      {/* --- Bento Section: Áreas de Cobertura --- */}
+      <div className="py-24 md:py-40 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16 md:mb-28">
-                <h2 className="text-4xl md:text-7xl font-black text-white font-heading mb-6 tracking-tighter">
-                    Toda a <span className="text-amber-400">Ciência</span> em um só Lugar.
+            <div className="text-center mb-20 md:mb-32">
+                <h2 className="text-4xl md:text-7xl font-black text-slate-900 font-heading mb-6 tracking-tighter">
+                    Toda a Ciência em uma <br className="hidden md:block"/>
+                    <span className="text-[#0da1a1]">Única Plataforma</span>.
                 </h2>
-                <div className="h-1.5 w-24 md:w-32 bg-amber-500 mx-auto rounded-full"></div>
-                <p className="mt-8 text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed px-4">
-                   Nossa inteligência cobre as 9 Grandes Áreas do CNPq e todas as subáreas CAPES, da Engenharia de Software à Arqueologia.
-                </p>
+                <div className="h-1.5 w-24 bg-[#0da1a1] mx-auto rounded-full"></div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
-                <div className="md:col-span-2 bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[2.5rem] md:rounded-[4rem] p-8 md:p-14 relative group hover:border-amber-500/30 transition-all duration-700">
-                    <div className="w-16 h-16 md:w-20 md:h-20 bg-amber-500/10 rounded-2xl md:rounded-[2rem] flex items-center justify-center mb-8 border border-amber-500/20">
-                        <GraduationCap className="w-8 md:w-10 h-8 md:h-10 text-amber-400" />
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
+                <div className="md:col-span-8 bg-slate-50 rounded-[3rem] p-10 md:p-16 border border-slate-100 relative group hover:shadow-2xl hover:shadow-[#0da1a1]/5 transition-all duration-700 overflow-hidden">
+                    <div className="absolute top-0 right-0 p-12 opacity-5">
+                       <GraduationCap className="w-64 h-64 text-slate-900" />
                     </div>
-                    <h3 className="text-2xl md:text-4xl font-black text-white mb-4 md:mb-6 font-heading tracking-tight">Qualis Soberano 2025-2028</h3>
-                    <p className="text-slate-400 text-base md:text-xl leading-relaxed font-medium">
-                        Algoritmos atualizados em tempo real com as novas portarias. Avalie sua produção em qualquer área do conhecimento com rigor absoluto.
-                    </p>
+                    <div className="relative z-10 max-w-lg">
+                       <div className="w-16 h-16 bg-[#0da1a1]/10 rounded-2xl flex items-center justify-center mb-8">
+                          <Trophy className="w-8 h-8 text-[#0da1a1]" />
+                       </div>
+                       <h3 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 font-heading tracking-tight">Qualis Soberano 2025-2028</h3>
+                       <p className="text-slate-600 text-lg md:text-xl leading-relaxed font-medium">
+                          Nossos algoritmos são atualizados em tempo real com as portarias da CAPES e métricas globais de impacto. Garanta que sua produção esteja alinhada com os mais altos padrões de excelência.
+                       </p>
+                       <button className="mt-10 flex items-center gap-3 text-[#0da1a1] font-black text-xs uppercase tracking-widest group/btn">
+                          Saber mais sobre o motor Qualis <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
+                       </button>
+                    </div>
                 </div>
 
-                <div className="bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[2.5rem] md:rounded-[4rem] p-8 md:p-14 group hover:border-indigo-500/30 transition-all duration-700">
-                    <div className="w-16 h-16 md:w-20 md:h-20 bg-indigo-500/10 rounded-2xl md:rounded-[2rem] flex items-center justify-center mb-8 border border-indigo-500/20">
-                        <Microscope className="w-8 md:w-10 h-8 md:h-10 text-indigo-400" />
+                <div className="md:col-span-4 bg-[#0da1a1] rounded-[3rem] p-10 md:p-12 text-white shadow-2xl shadow-[#0da1a1]/20 flex flex-col justify-between group hover:scale-[1.02] transition-transform duration-500">
+                    <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-8 border border-white/30 backdrop-blur-md">
+                       <Microscope className="w-8 h-8 text-white" />
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-black text-white mb-4 md:mb-6 font-heading tracking-tight">Impacto Global</h3>
-                    <p className="text-slate-400 text-sm md:text-lg leading-relaxed font-medium">
-                        Integração total com Scopus, WoS e SciELO para análise de visibilidade e citações internacionais.
-                    </p>
+                    <div>
+                       <h3 className="text-2xl md:text-3xl font-black mb-6 font-heading tracking-tight">Ecossistema Global</h3>
+                       <p className="text-white/80 text-base md:text-lg leading-relaxed font-medium">
+                          Integração total com as bases Scopus, Web of Science e SciELO para análise de visibilidade e citações internacionais em tempo real.
+                       </p>
+                    </div>
+                </div>
+
+                <div className="md:col-span-4 bg-slate-900 rounded-[3rem] p-10 md:p-12 text-white flex flex-col justify-between group">
+                    <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-8 border border-white/10">
+                       <BookOpen className="w-8 h-8 text-[#0da1a1]" />
+                    </div>
+                    <div>
+                       <h3 className="text-2xl md:text-3xl font-black mb-6 font-heading tracking-tight">Todas as Áreas CAPES</h3>
+                       <p className="text-slate-400 text-base md:text-lg leading-relaxed font-medium">
+                          Da Engenharia de Software à Arqueologia. Nossa IA compreende as nuances de cada subárea científica.
+                       </p>
+                    </div>
+                </div>
+
+                <div className="md:col-span-8 bg-slate-50 rounded-[3rem] p-10 md:p-12 border border-slate-100 flex items-center justify-center">
+                   <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
+                      {partners.map((p, i) => (
+                        <div key={i} className="flex flex-col items-center">
+                            <span className="text-2xl md:text-4xl font-black text-slate-950 font-heading">{p.name}</span>
+                            <span className="text-[8px] md:text-[10px] uppercase tracking-widest text-slate-500 font-black mt-1">{p.label}</span>
+                        </div>
+                      ))}
+                   </div>
                 </div>
             </div>
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-[#020617] py-16 md:py-28 border-t border-white/5 text-slate-500 relative z-10 text-center md:text-left">
+      {/* --- Footer Replicado --- */}
+      <footer className="bg-slate-950 py-20 border-t border-white/5 text-slate-400 relative z-10 text-center md:text-left">
          <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-12">
             <div className="flex flex-col items-center md:items-start gap-4 md:gap-6">
-               <div className="flex items-center gap-3">
-                  <GoldenEagleIcon className="w-8 h-7 md:w-10 md:h-9" />
-                  <div className="flex items-center">
-                    <span className="text-2xl md:text-3xl font-black text-white font-heading tracking-tighter">ALUMNI</span>
-                    <span className="text-2xl md:text-3xl font-black text-[#FBBF24] font-heading tracking-tighter ml-1.5">INDEX</span>
+               <div className="flex items-center gap-4">
+                  <SovereignEagleLogo className="w-10 h-8" />
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-2xl md:text-3xl font-black tracking-tighter text-white font-heading leading-none uppercase">Alumni</span>
+                    <span className="text-2xl md:text-3xl font-black tracking-tighter text-[#0da1a1] font-heading leading-none lowercase">.in</span>
                   </div>
                </div>
-               <p className="text-[10px] md:text-sm font-black uppercase tracking-widest opacity-60">© 2024 Alumni Index Sovereign Platform. Todas as Áreas CAPES.</p>
+               <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-60">© 2024 Alumni Index Sovereign Platform. Todos os Direitos Reservados.</p>
             </div>
-            <div className="flex flex-wrap justify-center gap-6 md:gap-12 text-[9px] md:text-[10px] font-black uppercase tracking-widest">
-               <a href="#" className="hover:text-amber-400 transition-colors">Privacidade</a>
-               <a href="#" className="hover:text-amber-400 transition-colors">Termos</a>
-               <a href="#" className="hover:text-amber-400 transition-colors">Lab Hub</a>
-               <a href="#" className="hover:text-amber-400 transition-colors">Suporte</a>
+            <div className="flex flex-wrap justify-center gap-8 md:gap-12 text-[10px] font-black uppercase tracking-widest">
+               <a href="#" className="hover:text-[#0da1a1] transition-colors">Privacidade</a>
+               <a href="#" className="hover:text-[#0da1a1] transition-colors">Termos</a>
+               <a href="#" className="hover:text-[#0da1a1] transition-colors">Lab Hub</a>
+               <a href="#" className="hover:text-[#0da1a1] transition-colors">Suporte Institucional</a>
             </div>
          </div>
       </footer>

@@ -1,11 +1,12 @@
+
 import React from 'react';
 import { 
   Home, Brain, Bot, FileEdit, MessageSquare, FileSearch, PenTool, 
-  FileText, Search, FileCheck, Award, Database, BookOpen, LogOut,
-  X, Sparkles, Zap
+  FileText, Search, FileCheck, Award, Database, LogOut,
+  X, Zap
 } from 'lucide-react';
 import { ViewState, User } from '../types';
-import { GoldenEagleIcon } from './LandingPage';
+import { SovereignEagleLogo } from './LandingPage';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -25,11 +26,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   onLogout 
 }) => {
   
-  // Theme configuration: "Neon Glass" Palette
   const menuGroups = [
     {
       title: "PRINCIPAL",
-      color: "cyan",
+      color: "teal",
       items: [
         { id: 'dashboard', label: 'Início', icon: Home, view: 'dashboard' as ViewState },
         { id: 'intelligence', label: 'Inteligência Acadêmica', icon: Brain, view: 'academic-intelligence' as ViewState },
@@ -37,7 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     },
     {
       title: "ANÁLISE",
-      color: "fuchsia",
+      color: "teal",
       items: [
         { id: 'review', label: 'Avaliação de Artigos', icon: FileCheck, view: 'review' as ViewState },
         { id: 'chat', label: 'Chat com PDF', icon: MessageSquare, view: 'chat' as ViewState },
@@ -47,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     },
     {
       title: "CRIAÇÃO",
-      color: "emerald",
+      color: "teal",
       items: [
         { id: 'writer', label: 'Redator Neural', icon: PenTool, view: 'writer' as ViewState },
         { id: 'draft', label: 'Esboço Inteligente', icon: FileEdit, view: 'draft' as ViewState },
@@ -67,32 +67,9 @@ const Sidebar: React.FC<SidebarProps> = ({
     if (window.innerWidth >= 1024) setSidebarOpen(false);
   };
 
-  // Helper: "Neon Glass" Theme Logic
-  const getGroupColor = (color: string, isActive: boolean) => {
-    const map: any = {
-        cyan: { 
-            activeText: 'text-cyan-200', 
-            bg: 'bg-cyan-500/10', 
-            border: 'border-cyan-400/50', 
-            glow: 'shadow-[0_0_20px_rgba(34,211,238,0.3)]',
-            indicator: 'bg-cyan-400'
-        },
-        fuchsia: { 
-            activeText: 'text-fuchsia-200', 
-            bg: 'bg-fuchsia-500/10', 
-            border: 'border-fuchsia-400/50', 
-            glow: 'shadow-[0_0_20px_rgba(232,121,249,0.3)]',
-            indicator: 'bg-fuchsia-400'
-        },
-        emerald: { 
-            activeText: 'text-emerald-200', 
-            bg: 'bg-emerald-500/10', 
-            border: 'border-emerald-400/50', 
-            glow: 'shadow-[0_0_20px_rgba(52,211,153,0.3)]',
-            indicator: 'bg-emerald-400'
-        }
-    };
-    return map[color];
+  const getActiveStyles = (isActive: boolean) => {
+    if (!isActive) return 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent';
+    return 'bg-[#0da1a1]/10 text-[#0da1a1] border-[#0da1a1]/50 shadow-[0_0_20px_rgba(13,161,161,0.2)] font-bold';
   };
 
   return (
@@ -107,23 +84,22 @@ const Sidebar: React.FC<SidebarProps> = ({
         onMouseLeave={handleMouseLeave}
         className={`
           fixed lg:relative z-50 h-screen 
-          bg-[#0f172a]/60 backdrop-blur-xl border-r border-white/5
+          bg-[#0f172a]/80 backdrop-blur-xl border-r border-white/5
           flex flex-col transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] 
           ${sidebarOpen ? 'w-72 translate-x-0' : 'w-[88px] -translate-x-full lg:translate-x-0'}
         `}
       >
-        {/* Header */}
         <div className="h-24 flex items-center px-6 relative">
           <div className="flex items-center gap-4 w-full">
              <div className="relative flex-shrink-0 group cursor-pointer" onClick={() => setCurrentView('landing')}>
-                <div className="absolute inset-0 bg-amber-500 blur-lg opacity-10 group-hover:opacity-30 transition-opacity rounded-full"></div>
-                <GoldenEagleIcon className="relative w-10 h-8 transition-transform group-hover:scale-105" />
+                <div className="absolute inset-0 bg-[#0da1a1] blur-lg opacity-10 group-hover:opacity-30 transition-opacity rounded-full"></div>
+                <SovereignEagleLogo className="relative w-10 h-8 transition-transform group-hover:scale-110" />
              </div>
 
              <div className={`flex flex-col transition-all duration-500 overflow-hidden whitespace-nowrap ${sidebarOpen ? 'opacity-100 max-w-[200px]' : 'opacity-0 max-w-0'}`}>
                 <div className="flex items-center">
                   <span className="font-black text-xl leading-none text-white font-heading tracking-tighter">ALUMNI</span>
-                  <span className="font-black text-xl leading-none text-amber-400 font-heading tracking-tighter ml-1">INDEX</span>
+                  <span className="font-black text-xl leading-none text-[#0da1a1] font-heading tracking-tighter ml-1">INDEX</span>
                 </div>
                 <span className="text-[9px] text-slate-400 font-black tracking-[0.2em] uppercase mt-1">Sovereign Intelligence</span>
              </div>
@@ -137,7 +113,6 @@ const Sidebar: React.FC<SidebarProps> = ({
           </button>
         </div>
 
-        {/* Navigation */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 space-y-8 py-4 custom-scrollbar">
           {menuGroups.map((group, groupIndex) => (
             <div key={groupIndex}>
@@ -153,8 +128,6 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <div className="space-y-1.5">
                     {group.items.map((item) => {
                     const isActive = currentView === item.view;
-                    const activeTheme = getGroupColor(group.color, isActive);
-
                     return (
                         <button
                         key={item.id}
@@ -166,36 +139,25 @@ const Sidebar: React.FC<SidebarProps> = ({
                             w-full flex items-center relative group
                             rounded-xl transition-all duration-300
                             ${sidebarOpen ? 'px-4 py-3 gap-3' : 'p-3 justify-center'}
-                            ${isActive 
-                            ? `${activeTheme.bg} ${activeTheme.activeText} border ${activeTheme.border} ${activeTheme.glow}` 
-                            : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'}
+                            ${getActiveStyles(isActive)}
                         `}
                         >
                         <item.icon 
                             className={`
                             transition-all duration-300 flex-shrink-0
-                            ${isActive ? `w-5 h-5 ${activeTheme.activeText} drop-shadow-[0_0_5px_currentColor]` : `w-5 h-5 group-hover:scale-110`}
+                            ${isActive ? `w-5 h-5 text-[#0da1a1] drop-shadow-[0_0_5px_currentColor]` : `w-5 h-5 group-hover:scale-110`}
                             `} 
                         />
                         
                         <span className={`
                             text-sm font-medium tracking-tight whitespace-nowrap overflow-hidden transition-all duration-500
                             ${sidebarOpen ? 'opacity-100 max-w-[200px]' : 'opacity-0 max-w-0 hidden lg:block'}
-                            ${isActive ? 'font-bold' : ''}
                         `}>
                             {item.label}
                         </span>
 
-                        {/* Active Dot Indicator (Right Side) */}
                         {isActive && sidebarOpen && (
-                            <div className={`ml-auto w-1.5 h-1.5 rounded-full ${activeTheme.indicator} shadow-[0_0_8px_currentColor]`}></div>
-                        )}
-
-                        {/* Tooltip for Collapsed State */}
-                        {!sidebarOpen && (
-                            <div className="hidden lg:block absolute left-14 bg-[#1e293b] text-white text-xs font-bold px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-all duration-200 transform translate-x-2 group-hover:translate-x-0 shadow-xl border border-white/10">
-                            {item.label}
-                            </div>
+                            <div className={`ml-auto w-1.5 h-1.5 rounded-full bg-[#0da1a1] shadow-[0_0_8px_currentColor]`}></div>
                         )}
                         </button>
                     );
@@ -205,24 +167,16 @@ const Sidebar: React.FC<SidebarProps> = ({
           ))}
         </div>
 
-        {/* User Footer */}
         <div className="p-4 border-t border-white/5 bg-[#0a0f1e]/40 backdrop-blur-md">
-          <div className={`
-            flex items-center transition-all duration-300 
-            ${sidebarOpen ? 'gap-3' : 'justify-center'}
-          `}>
-            <div className="relative flex-shrink-0 group cursor-pointer">
-              <div className="w-10 h-10 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg ring-2 ring-white/10 group-hover:ring-cyan-400/50 transition-all">
-                {user.name.substring(0, 2).toUpperCase()}
-              </div>
-              <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-[#0f172a] rounded-full animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]"></div>
+          <div className={`flex items-center transition-all duration-300 ${sidebarOpen ? 'gap-3' : 'justify-center'}`}>
+            <div className="w-10 h-10 bg-gradient-to-tr from-[#0da1a1] to-cyan-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg ring-2 ring-white/10 group-hover:ring-[#0da1a1]/50 transition-all">
+              {user.name.substring(0, 2).toUpperCase()}
             </div>
-            
             <div className={`overflow-hidden transition-all duration-500 ${sidebarOpen ? 'opacity-100 max-w-[200px]' : 'opacity-0 max-w-0'}`}>
               <div className="flex flex-col">
                 <p className="text-sm font-bold text-white truncate font-heading tracking-wide">{user.name}</p>
                 <div className="flex items-center gap-2 mt-0.5">
-                  <span className="text-[10px] bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-200 px-1.5 py-px rounded border border-amber-500/30 font-bold uppercase tracking-wider shadow-sm flex items-center gap-1">
+                  <span className="text-[10px] bg-[#0da1a1]/20 text-[#0da1a1] px-1.5 py-px rounded border border-[#0da1a1]/30 font-bold uppercase tracking-wider flex items-center gap-1">
                     <Zap className="w-2 h-2" />
                     {user.tier}
                   </span>

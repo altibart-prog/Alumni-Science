@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Alumni Science</title>
-    <meta name="description" content="Plataforma de Inteligência Acadêmica" />
+    <title>Alumni Index</title>
+    <meta name="description" content="Plataforma de Inteligência Acadêmica e Transformação" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +14,8 @@
       :root {
         --font-heading: 'Plus Jakarta Sans', sans-serif;
         --font-body: 'Outfit', sans-serif;
-        --font-serif: 'Libre Baskerville', serif;
+        --brand-teal: #0da1a1;
+        --brand-teal-dark: #0b8a8a;
       }
       body {
         font-family: var(--font-body);
@@ -23,9 +25,10 @@
       h1, h2, h3, h4, h5, h6 {
         font-family: var(--font-heading);
       }
-      .font-serif {
-        font-family: var(--font-serif);
-      }
+      .text-brand { color: var(--brand-teal); }
+      .bg-brand { background-color: var(--brand-teal); }
+      .border-brand { border-color: var(--brand-teal); }
+      
       ::-webkit-scrollbar {
         width: 6px;
         height: 6px;
@@ -38,29 +41,17 @@
         border-radius: 10px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #334155;
+        background: var(--brand-teal);
       }
       
-      .animate-gradient-x {
-        background-size: 200% 200%;
-        animation: gradient-x 15s ease infinite;
-      }
-      @keyframes gradient-x {
-        0% { background-position: 0% 50% }
-        50% { background-position: 100% 50% }
-        100% { background-position: 0% 50% }
-      }
-      .animate-blob {
-        animation: blob 7s infinite;
-      }
       @keyframes blob {
         0% { transform: translate(0px, 0px) scale(1); }
         33% { transform: translate(30px, -50px) scale(1.1); }
         66% { transform: translate(-20px, 20px) scale(0.9); }
         100% { transform: translate(0px, 0px) scale(1); }
       }
+      .animate-blob { animation: blob 7s infinite; }
       .animation-delay-2000 { animation-delay: 2s; }
-      .animation-delay-4000 { animation-delay: 4s; }
     </style>
   <script type="importmap">
 {
