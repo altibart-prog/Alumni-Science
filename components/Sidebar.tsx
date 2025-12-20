@@ -3,7 +3,7 @@ import React from 'react';
 import { 
   Home, Brain, Bot, FileEdit, MessageSquare, FileSearch, PenTool, 
   FileText, Search, FileCheck, Award, Database, LogOut,
-  X, Zap
+  X, Zap, Library
 } from 'lucide-react';
 import { ViewState, User } from '../types';
 import { SovereignEagleLogo } from './LandingPage';
@@ -33,11 +33,11 @@ const Sidebar: React.FC<SidebarProps> = ({
       items: [
         { id: 'dashboard', label: 'Início', icon: Home, view: 'dashboard' as ViewState },
         { id: 'intelligence', label: 'Inteligência Acadêmica', icon: Brain, view: 'academic-intelligence' as ViewState },
+        { id: 'journals', label: 'Revistas Científicas', icon: Library, view: 'journals' as ViewState },
       ]
     },
     {
       title: "ANÁLISE",
-      color: "teal",
       items: [
         { id: 'review', label: 'Avaliação de Artigos', icon: FileCheck, view: 'review' as ViewState },
         { id: 'chat', label: 'Chat com PDF', icon: MessageSquare, view: 'chat' as ViewState },
@@ -47,7 +47,6 @@ const Sidebar: React.FC<SidebarProps> = ({
     },
     {
       title: "CRIAÇÃO",
-      color: "teal",
       items: [
         { id: 'writer', label: 'Redator Neural', icon: PenTool, view: 'writer' as ViewState },
         { id: 'draft', label: 'Esboço Inteligente', icon: FileEdit, view: 'draft' as ViewState },

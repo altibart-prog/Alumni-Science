@@ -2,13 +2,14 @@
 import React, { useState } from 'react';
 import { 
   BookOpen, FileText, MessageSquare, Search, Award, 
-  PenTool, FileSearch, Bot, FileCheck, FileEdit, Database, Home, Menu 
+  PenTool, FileSearch, Bot, FileCheck, FileEdit, Database, Home, Menu, Library 
 } from 'lucide-react';
 import LandingPage, { SovereignEagleLogo } from './components/LandingPage';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import ReviewPage from './components/ReviewPage';
 import AcademicIntelligence from './components/AcademicIntelligence';
+import JournalsDashboard from './components/JournalsDashboard';
 import PlaceholderView from './components/PlaceholderView';
 import ScientificCommittee from './components/ScientificCommittee';
 import { User, ViewState, MenuItem } from './types';
@@ -38,6 +39,7 @@ export default function App() {
     const items: MenuItem[] = [
       { id: 'dashboard', label: 'Início', icon: Home, subtitle: 'Visão geral', view: 'dashboard' },
       { id: 'intelligence', label: 'Inteligência Acadêmica', icon: BookOpen, subtitle: 'CAPES, Qualis & Impacto', view: 'academic-intelligence' },
+      { id: 'journals', label: 'Revistas Científicas', icon: Library, subtitle: 'Dashboard de Periódicos', view: 'journals' },
       { id: 'agents', label: 'Galeria de Agentes', icon: Bot, subtitle: 'Assistentes especializados', view: 'agents' },
       { id: 'draft', label: 'Esboço Inteligente', icon: FileEdit, subtitle: 'Artigo via Zotero/Mendeley', view: 'draft' },
       { id: 'chat', label: 'Chat com PDF', icon: MessageSquare, subtitle: 'Interaja com documentos', view: 'chat' },
@@ -105,7 +107,11 @@ export default function App() {
               <AcademicIntelligence />
             )}
 
-            {currentView !== 'dashboard' && currentView !== 'review' && currentView !== 'academic-intelligence' && currentMenu && (
+            {currentView === 'journals' && (
+              <JournalsDashboard />
+            )}
+
+            {currentView !== 'dashboard' && currentView !== 'review' && currentView !== 'academic-intelligence' && currentView !== 'journals' && currentMenu && (
               <PlaceholderView 
                 view={currentView}
                 icon={currentMenu.icon}

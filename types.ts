@@ -1,8 +1,9 @@
+
 import { LucideIcon } from 'lucide-react';
 
 export type ViewState = 
   | 'landing' 
-  | 'committee' // Adicionado
+  | 'committee' 
   | 'dashboard' 
   | 'review' 
   | 'research' 
@@ -19,6 +20,7 @@ export type ViewState =
   | 'members' 
   | 'citations' 
   | 'academic-intelligence'
+  | 'journals'
   | 'tools';
 
 export type MembershipTier = 'FREE' | 'PRO' | 'INSTITUTIONAL';
